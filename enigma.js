@@ -96,7 +96,7 @@ Plugboard.prototype.addPlug = function(letter1, letter2) {
 Plugboard.prototype.addPlugs = function(letters1, letters2) {
     for (var i = 0; i < letters1.length; i++)
         this.plugs[letters1[i]] = letters2[i];
-}
+};
 
 Plugboard.prototype.encode = function(letter) {
     if (letter in this.plugs)
