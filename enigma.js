@@ -1,6 +1,23 @@
 /* Enigma machine emulator.
  * Author: Matheus Vieira Portela
  * GitHub: https://github.com/matheusportela/
+ *
+ * This is a simulator for the Enigma machine, one of the most incredible
+ * applications of cryptography during World War I and II. German militaries
+ * would send encrypted messages through the air using telegraphs about bombing
+ * locations with security, considering one would have to know the precise
+ * combination of rotor positioning, plugboard configuration, and other pieces
+ * in order to decode captured messages.
+ *
+ * Even though several weaknesses were discovered - specially by the Allies
+ * forces - allowing one to break the code, the Enigma encryption algorithm is
+ * a fun way to study a little bit of cryptography.
+ *
+ * Of course, studying the Enigma is also a tribute to Alan Turing.
+ *
+ * References:
+ * - Enigma machine https://en.wikipedia.org/wiki/Enigma_machine
+ * - Enigma simulator http://enigma.louisedade.co.uk/howitworks.html
  */
 var expect = require('chai').expect;
 
