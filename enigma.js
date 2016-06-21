@@ -48,6 +48,25 @@ describe('Plugboard', function() {
             expect(plugboard.encode('A')).to.be.equal('B');
         });
     });
+
+
+    describe('addPlugs', function() {
+        it('expect plugged letters encode to their plugs', function() {
+            var plugboard = new Plugboard();
+            plugboard.addPlugs('ABC', 'DEF');
+            expect(plugboard.encode('A')).to.be.equal('D');
+            expect(plugboard.encode('B')).to.be.equal('E');
+            expect(plugboard.encode('C')).to.be.equal('F');
+        });
+
+        it('expect non-plugged letters encode to themselves', function() {
+            var plugboard = new Plugboard();
+            plugboard.addPlugs('ABC', 'DEF');
+            expect(plugboard.encode('G')).to.be.equal('G');
+            expect(plugboard.encode('H')).to.be.equal('H');
+            expect(plugboard.encode('I')).to.be.equal('I');
+        });
+    });
 });
 
 var Plugboard = function() {
@@ -58,6 +77,12 @@ Plugboard.prototype.addPlug = function(letter1, letter2) {
     this.plugs[letter1] = letter2;
     this.plugs[letter2] = letter1;
 };
+
+Plugboard.prototype.addPlugs = function(letters1, letters2) {
+    for (var i = 0; i < letters1.length; i++) {
+        this.plugs[letters1[i]] = letters2[i];
+    }
+}
 
 Plugboard.prototype.encode = function(letter) {
     if (letter in this.plugs)
