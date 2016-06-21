@@ -67,10 +67,25 @@ describe('Plugboard', function() {
             expect(plugboard.encode('I')).to.be.equal('I');
         });
     });
+
+    describe('constructor', function() {
+        it('expect plugboard be configured through constructor', function() {
+            var plugboard = new Plugboard('ABC', 'DEF');
+            expect(plugboard.encode('A')).to.be.equal('D');
+            expect(plugboard.encode('B')).to.be.equal('E');
+            expect(plugboard.encode('C')).to.be.equal('F');
+            expect(plugboard.encode('G')).to.be.equal('G');
+            expect(plugboard.encode('H')).to.be.equal('H');
+            expect(plugboard.encode('I')).to.be.equal('I');
+        });
+    });
 });
 
-var Plugboard = function() {
+var Plugboard = function(letters1, letters2) {
     this.plugs = {};
+
+    if (letters1 != undefined && letters2 != undefined)
+        this.addPlugs(letters1, letters2);
 };
 
 Plugboard.prototype.addPlug = function(letter1, letter2) {
@@ -79,9 +94,8 @@ Plugboard.prototype.addPlug = function(letter1, letter2) {
 };
 
 Plugboard.prototype.addPlugs = function(letters1, letters2) {
-    for (var i = 0; i < letters1.length; i++) {
+    for (var i = 0; i < letters1.length; i++)
         this.plugs[letters1[i]] = letters2[i];
-    }
 }
 
 Plugboard.prototype.encode = function(letter) {
