@@ -122,7 +122,7 @@ describe('Rotor', function() {
 var Plugboard = function(letters1, letters2) {
     this.plugs = {};
 
-    if (letters1 != undefined && letters2 != undefined)
+    if (letters1 && letters2)
         this.addPlugs(letters1, letters2);
 };
 
@@ -146,7 +146,7 @@ var Rotor = function(wireTable) {
     this.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     this.wires = {};
 
-    if (wireTable != undefined)
+    if (wireTable)
         this.setWireTable(wireTable);
 };
 
