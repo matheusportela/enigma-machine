@@ -78,6 +78,13 @@ describe('Plugboard', function() {
             expect(plugboard.encode('H')).to.be.equal('H');
             expect(plugboard.encode('I')).to.be.equal('I');
         });
+
+        it('expect plugboard to be reciprocal', function() {
+            var plugboard = new Plugboard('ABC', 'DEF');
+            expect(plugboard.encode('D')).to.be.equal('A');
+            expect(plugboard.encode('E')).to.be.equal('B');
+            expect(plugboard.encode('F')).to.be.equal('C');
+        });
     });
 });
 
@@ -164,6 +171,24 @@ describe('Rotor', function() {
     });
 });
 
+describe('Enigma', function() {
+    describe('encode', function() {
+        it('expect encode to return a letter different from the given one',
+            function() {
+                var enigma = new Enigma();
+                expect(enigma.encode('A')).to.not.be.equal('A');
+        });
+
+        it('expect encode with encoded letter to be the original one',
+            function() {
+                var enigma = new Enigma();
+                var input = 'A';
+                var output = enigma.encode(input);
+                expect(enigma.encode(output)).to.be.equal(input);
+        });
+    });
+});
+
 var Plugboard = function(letters1, letters2) {
     this.plugs = {};
 
@@ -178,7 +203,7 @@ Plugboard.prototype.addPlug = function(letter1, letter2) {
 
 Plugboard.prototype.addPlugs = function(letters1, letters2) {
     for (var i = 0; i < letters1.length; i++)
-        this.plugs[letters1[i]] = letters2[i];
+        this.addPlug(letters1[i], letters2[i]);
 };
 
 Plugboard.prototype.encode = function(letter) {
@@ -235,4 +260,12 @@ Rotor.prototype.turnover = function() {
             this.turnoverCountdown = 26;
         }
     }
+};
+
+var Enigma = function() {
+    this.plugboard = new Plugboard('A', 'B');
+};
+
+Enigma.prototype.encode = function(letter) {
+    return this.plugboard.encode(letter);
 };
