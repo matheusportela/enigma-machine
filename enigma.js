@@ -81,6 +81,44 @@ describe('Plugboard', function() {
     });
 });
 
+describe('Rotor', function() {
+    describe('addWire', function() {
+        it('expect add wiring to rotor', function() {
+            var rotor = new Rotor();
+            rotor.addWire('A', 'B');
+            expect(rotor.wires['A']).to.be.equal('B');
+        });
+    });
+
+    describe('setWireTable', function() {
+        it('expect rotor wire table to configure wires', function() {
+            var rotor = new Rotor();
+            rotor.setWireTable('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            expect(rotor.wires['A']).to.be.equal('E');
+            expect(rotor.wires['B']).to.be.equal('K');
+            expect(rotor.wires['Z']).to.be.equal('J');
+        });
+    });
+
+    describe('encode', function() {
+        it('expect rotor to encode with wire table', function() {
+            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            expect(rotor.encode('A')).to.be.equal('E');
+            expect(rotor.encode('B')).to.be.equal('K');
+            expect(rotor.encode('Z')).to.be.equal('J');
+        });
+    });
+
+    describe('constructor', function() {
+        it('expect rotor be configured through constructor', function() {
+            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            expect(rotor.wires['A']).to.be.equal('E');
+            expect(rotor.wires['B']).to.be.equal('K');
+            expect(rotor.wires['Z']).to.be.equal('J');
+        });
+    });
+});
+
 var Plugboard = function(letters1, letters2) {
     this.plugs = {};
 
@@ -104,4 +142,23 @@ Plugboard.prototype.encode = function(letter) {
     return letter;
 };
 
-module.exports = Plugboard;
+var Rotor = function(wireTable) {
+    this.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    this.wires = {};
+
+    if (wireTable != undefined)
+        this.setWireTable(wireTable);
+};
+
+Rotor.prototype.addWire = function(letter1, letter2) {
+    this.wires[letter1] = letter2;
+};
+
+Rotor.prototype.setWireTable = function(wireTable) {
+    for (var i = 0; i < this.letters.length; i++)
+        this.wires[this.letters[i]] = wireTable[i];
+};
+
+Rotor.prototype.encode = function(letter) {
+    return this.wires[letter];
+};
