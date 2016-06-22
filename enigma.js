@@ -114,6 +114,12 @@ describe('Rotor', function() {
             expect(rotor.encode('B')).to.be.equal('K');
             expect(rotor.encode('Z')).to.be.equal('J');
         });
+
+        it('expect rotor without step encode output to input', function() {
+            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            expect(rotor.encode('A')).to.be.equal('E');
+            expect(rotor.encode('E', inverse = true)).to.be.equal('A');
+        });
     });
 
     describe('constructor', function() {
@@ -191,10 +197,12 @@ describe('Enigma', function() {
 
         it('expect encode with encoded letter to be the original one',
             function() {
-                var enigma = new Enigma();
+                var enigma1 = new Enigma();
                 var input = 'A';
-                var output = enigma.encode(input);
-                expect(enigma.encode(output)).to.be.equal(input);
+                var output = enigma1.encode(input);
+
+                var enigma2 = new Enigma();
+                expect(enigma2.encode(output)).to.be.equal(input);
         });
     });
 });
@@ -225,6 +233,7 @@ Plugboard.prototype.encode = function(letter) {
 var Rotor = function(wireTable) {
     this.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     this.wires = {};
+    this.inverseWires = {};
     this.nextRotor = null;
     this.turnoverCountdown = 26;
 
@@ -237,11 +246,17 @@ Rotor.prototype.addWire = function(letter1, letter2) {
 };
 
 Rotor.prototype.setWireTable = function(wireTable) {
-    for (var i = 0; i < this.letters.length; i++)
+    for (var i = 0; i < this.letters.length; i++) {
         this.wires[this.letters[i]] = wireTable[i];
+        this.inverseWires[wireTable[i]] = this.letters[i];
+    }
 };
 
-Rotor.prototype.encode = function(letter) {
+Rotor.prototype.encode = function(letter, inverse) {
+    var inverse = typeof inverse !== 'undefined' ? inverse : false;
+
+    if (inverse)
+        return this.inverseWires[letter];
     return this.wires[letter];
 };
 
@@ -290,8 +305,16 @@ Reflector.prototype.encode = function(letter) {
 
 var Enigma = function() {
     this.plugboard = new Plugboard('A', 'B');
+    this.rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+    this.reflector = new Reflector();
 };
 
 Enigma.prototype.encode = function(letter) {
-    return this.plugboard.encode(letter);
+    var plugboardInput = this.plugboard.encode(letter);
+    var rotorInput = this.rotor.encode(plugboardInput);
+    var reflectorOutput = this.reflector.encode(rotorInput);
+    var rotorOutput = this.rotor.encode(reflectorOutput, inverse = true);
+    var plugboardOutput = this.plugboard.encode(rotorOutput);
+
+    return plugboardOutput;
 };
