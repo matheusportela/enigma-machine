@@ -230,9 +230,9 @@ Rotor.prototype.turnover = function() {
     if (this.nextRotor) {
         this.turnoverCountdown -= 1;
 
-        if (this.turnoverCountdown == 0) {
+        if (this.turnoverCountdown === 0) {
             this.nextRotor.step();
             this.turnoverCountdown = 26;
         }
     }
-}
+};
