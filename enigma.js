@@ -171,6 +171,16 @@ describe('Rotor', function() {
     });
 });
 
+describe('Reflector', function() {
+    describe('encode', function() {
+        it('expect encode to return the opposite letter', function() {
+                var reflector = new Reflector();
+                expect(reflector.encode('A')).to.be.equal('Z');
+                expect(reflector.encode('Z')).to.be.equal('A');
+        });
+    });
+});
+
 describe('Enigma', function() {
     describe('encode', function() {
         it('expect encode to return a letter different from the given one',
@@ -260,6 +270,22 @@ Rotor.prototype.turnover = function() {
             this.turnoverCountdown = 26;
         }
     }
+};
+
+var Reflector = function() {
+    this.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    this.reflectionTable = {};
+
+    for (var i = 0; i < this.letters.length/2; i++) {
+        letter1 = this.letters[i];
+        letter2 = this.letters[25 - i];
+        this.reflectionTable[letter1] = letter2;
+        this.reflectionTable[letter2] = letter1;
+    }
+};
+
+Reflector.prototype.encode = function(letter) {
+    return this.reflectionTable[letter];
 };
 
 var Enigma = function() {
