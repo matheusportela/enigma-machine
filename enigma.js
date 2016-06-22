@@ -118,19 +118,48 @@ describe('Rotor', function() {
         });
     });
 
-    describe('rotate', function() {
-        it('expect rotate change first encoded letter', function() {
+    describe('step', function() {
+        it('expect step change first encoded letter', function() {
             var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
             expect(rotor.wires['A']).to.be.equal('E');
-            rotor.rotate();
+            rotor.step();
             expect(rotor.wires['A']).to.be.equal('K');
         });
 
-        it('expect rotate change last encoded letter', function() {
+        it('expect step change last encoded letter', function() {
             var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
             expect(rotor.wires['Z']).to.be.equal('J');
-            rotor.rotate();
+            rotor.step();
             expect(rotor.wires['Z']).to.be.equal('E');
+        });
+    });
+
+    describe('turnover', function() {
+        it('expect turnover to be reached after 26 steps', function() {
+            var rotor1 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            var rotor2 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+
+            rotor1.nextRotor = rotor2;
+
+            expect(rotor1.wires['A']).to.be.equal('E');
+            expect(rotor2.wires['A']).to.be.equal('E');
+
+            for (var i = 0; i < 26; i++)
+                rotor1.step();
+
+            expect(rotor1.wires['A']).to.be.equal('E');
+            expect(rotor2.wires['A']).to.be.equal('K');
+        });
+
+        it('expect turnover without next rotor maintain encoding', function() {
+            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+
+            expect(rotor.wires['A']).to.be.equal('E');
+
+            for (var i = 0; i < 26; i++)
+                rotor.step();
+
+            expect(rotor.wires['A']).to.be.equal('E');
         });
     });
 });
@@ -161,6 +190,8 @@ Plugboard.prototype.encode = function(letter) {
 var Rotor = function(wireTable) {
     this.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     this.wires = {};
+    this.nextRotor = null;
+    this.turnoverCountdown = 26;
 
     if (wireTable)
         this.setWireTable(wireTable);
@@ -179,16 +210,29 @@ Rotor.prototype.encode = function(letter) {
     return this.wires[letter];
 };
 
-Rotor.prototype.rotate = function() {
+Rotor.prototype.step = function() {
     var new_wires = {};
-    var current_letter;
-    var next_letter;
+    var currentLetter;
+    var nextLetter;
 
     for (var i = 0; i < this.letters.length; i++) {
-        current_letter = this.letters[i];
-        next_letter = this.letters[(i + 1) % this.letters.length];
-        new_wires[current_letter] = this.wires[next_letter];
+        currentLetter = this.letters[i];
+        nextLetter = this.letters[(i + 1) % this.letters.length];
+        new_wires[currentLetter] = this.wires[nextLetter];
     }
 
     this.wires = new_wires;
+
+    this.turnover();
 };
+
+Rotor.prototype.turnover = function() {
+    if (this.nextRotor) {
+        this.turnoverCountdown -= 1;
+
+        if (this.turnoverCountdown == 0) {
+            this.nextRotor.step();
+            this.turnoverCountdown = 26;
+        }
+    }
+}
