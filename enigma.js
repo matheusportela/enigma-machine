@@ -117,6 +117,22 @@ describe('Rotor', function() {
             expect(rotor.wires['Z']).to.be.equal('J');
         });
     });
+
+    describe('rotate', function() {
+        it('expect rotate change first encoded letter', function() {
+            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            expect(rotor.wires['A']).to.be.equal('E');
+            rotor.rotate();
+            expect(rotor.wires['A']).to.be.equal('K');
+        });
+
+        it('expect rotate change last encoded letter', function() {
+            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            expect(rotor.wires['Z']).to.be.equal('J');
+            rotor.rotate();
+            expect(rotor.wires['Z']).to.be.equal('E');
+        });
+    });
 });
 
 var Plugboard = function(letters1, letters2) {
@@ -161,4 +177,18 @@ Rotor.prototype.setWireTable = function(wireTable) {
 
 Rotor.prototype.encode = function(letter) {
     return this.wires[letter];
+};
+
+Rotor.prototype.rotate = function() {
+    var new_wires = {};
+    var current_letter;
+    var next_letter;
+
+    for (var i = 0; i < this.letters.length; i++) {
+        current_letter = this.letters[i];
+        next_letter = this.letters[(i + 1) % this.letters.length];
+        new_wires[current_letter] = this.wires[next_letter];
+    }
+
+    this.wires = new_wires;
 };
