@@ -19,33 +19,33 @@
  * - Enigma machine https://en.wikipedia.org/wiki/Enigma_machine
  * - Enigma simulator http://enigma.louisedade.co.uk/howitworks.html
  */
-var expect = require('chai').expect;
+var assert = require('assert');
 
 describe('Plugboard', function() {
     describe('addPlug', function() {
         it('expect add letter to plugs', function() {
             var plugboard = new Plugboard();
             plugboard.addPlug('A', 'B');
-            expect(plugboard.plugs['A']).to.be.equal('B');
+            assert.equal(plugboard.plugs['A'], 'B');
         });
 
         it('expect add inverse letter to plugs', function() {
             var plugboard = new Plugboard();
             plugboard.addPlug('A', 'B');
-            expect(plugboard.plugs['B']).to.be.equal('A');
+            assert.equal(plugboard.plugs['B'], 'A');
         });
     });
 
     describe('encode', function() {
         it('expect non-plugged letter encode to itself', function() {
             var plugboard = new Plugboard();
-            expect(plugboard.encode('A')).to.be.equal('A');
+            assert.equal(plugboard.encode('A'), 'A');
         });
 
         it('expect plugged letter encode to its plug output', function() {
             var plugboard = new Plugboard();
             plugboard.addPlug('A', 'B');
-            expect(plugboard.encode('A')).to.be.equal('B');
+            assert.equal(plugboard.encode('A'), 'B');
         });
     });
 
@@ -54,36 +54,36 @@ describe('Plugboard', function() {
         it('expect plugged letters encode to their plugs', function() {
             var plugboard = new Plugboard();
             plugboard.addPlugs('ABC', 'DEF');
-            expect(plugboard.encode('A')).to.be.equal('D');
-            expect(plugboard.encode('B')).to.be.equal('E');
-            expect(plugboard.encode('C')).to.be.equal('F');
+            assert.equal(plugboard.encode('A'), 'D');
+            assert.equal(plugboard.encode('B'), 'E');
+            assert.equal(plugboard.encode('C'), 'F');
         });
 
         it('expect non-plugged letters encode to themselves', function() {
             var plugboard = new Plugboard();
             plugboard.addPlugs('ABC', 'DEF');
-            expect(plugboard.encode('G')).to.be.equal('G');
-            expect(plugboard.encode('H')).to.be.equal('H');
-            expect(plugboard.encode('I')).to.be.equal('I');
+            assert.equal(plugboard.encode('G'), 'G');
+            assert.equal(plugboard.encode('H'), 'H');
+            assert.equal(plugboard.encode('I'), 'I');
         });
     });
 
     describe('constructor', function() {
         it('expect plugboard be configured through constructor', function() {
             var plugboard = new Plugboard('ABC', 'DEF');
-            expect(plugboard.encode('A')).to.be.equal('D');
-            expect(plugboard.encode('B')).to.be.equal('E');
-            expect(plugboard.encode('C')).to.be.equal('F');
-            expect(plugboard.encode('G')).to.be.equal('G');
-            expect(plugboard.encode('H')).to.be.equal('H');
-            expect(plugboard.encode('I')).to.be.equal('I');
+            assert.equal(plugboard.encode('A'), 'D');
+            assert.equal(plugboard.encode('B'), 'E');
+            assert.equal(plugboard.encode('C'), 'F');
+            assert.equal(plugboard.encode('G'), 'G');
+            assert.equal(plugboard.encode('H'), 'H');
+            assert.equal(plugboard.encode('I'), 'I');
         });
 
         it('expect plugboard to be reciprocal', function() {
             var plugboard = new Plugboard('ABC', 'DEF');
-            expect(plugboard.encode('D')).to.be.equal('A');
-            expect(plugboard.encode('E')).to.be.equal('B');
-            expect(plugboard.encode('F')).to.be.equal('C');
+            assert.equal(plugboard.encode('D'), 'A');
+            assert.equal(plugboard.encode('E'), 'B');
+            assert.equal(plugboard.encode('F'), 'C');
         });
     });
 });
@@ -93,7 +93,7 @@ describe('Rotor', function() {
         it('expect add wiring to rotor', function() {
             var rotor = new Rotor();
             rotor.addWire('A', 'B');
-            expect(rotor.wires['A']).to.be.equal('B');
+            assert.equal(rotor.wires['A'], 'B');
         });
     });
 
@@ -101,49 +101,49 @@ describe('Rotor', function() {
         it('expect rotor wire table to configure wires', function() {
             var rotor = new Rotor();
             rotor.setWireTable('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            expect(rotor.wires['A']).to.be.equal('E');
-            expect(rotor.wires['B']).to.be.equal('K');
-            expect(rotor.wires['Z']).to.be.equal('J');
+            assert.equal(rotor.wires['A'], 'E');
+            assert.equal(rotor.wires['B'], 'K');
+            assert.equal(rotor.wires['Z'], 'J');
         });
     });
 
     describe('encode', function() {
         it('expect rotor to encode with wire table', function() {
             var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            expect(rotor.encode('A')).to.be.equal('E');
-            expect(rotor.encode('B')).to.be.equal('K');
-            expect(rotor.encode('Z')).to.be.equal('J');
+            assert.equal(rotor.encode('A'), 'E');
+            assert.equal(rotor.encode('B'), 'K');
+            assert.equal(rotor.encode('Z'), 'J');
         });
 
         it('expect rotor without step encode output to input', function() {
             var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            expect(rotor.encode('A')).to.be.equal('E');
-            expect(rotor.encode('E', inverse = true)).to.be.equal('A');
+            assert.equal(rotor.encode('A'), 'E');
+            assert.equal(rotor.encode('E', inverse = true), 'A');
         });
     });
 
     describe('constructor', function() {
         it('expect rotor be configured through constructor', function() {
             var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            expect(rotor.wires['A']).to.be.equal('E');
-            expect(rotor.wires['B']).to.be.equal('K');
-            expect(rotor.wires['Z']).to.be.equal('J');
+            assert.equal(rotor.wires['A'], 'E');
+            assert.equal(rotor.wires['B'], 'K');
+            assert.equal(rotor.wires['Z'], 'J');
         });
     });
 
     describe('step', function() {
         it('expect step change first encoded letter', function() {
             var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            expect(rotor.wires['A']).to.be.equal('E');
+            assert.equal(rotor.wires['A'], 'E');
             rotor.step();
-            expect(rotor.wires['A']).to.be.equal('K');
+            assert.equal(rotor.wires['A'], 'K');
         });
 
         it('expect step change last encoded letter', function() {
             var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            expect(rotor.wires['Z']).to.be.equal('J');
+            assert.equal(rotor.wires['Z'], 'J');
             rotor.step();
-            expect(rotor.wires['Z']).to.be.equal('E');
+            assert.equal(rotor.wires['Z'], 'E');
         });
     });
 
@@ -154,25 +154,25 @@ describe('Rotor', function() {
 
             rotor1.nextRotor = rotor2;
 
-            expect(rotor1.wires['A']).to.be.equal('E');
-            expect(rotor2.wires['A']).to.be.equal('E');
+            assert.equal(rotor1.wires['A'], 'E');
+            assert.equal(rotor2.wires['A'], 'E');
 
             for (var i = 0; i < 26; i++)
                 rotor1.step();
 
-            expect(rotor1.wires['A']).to.be.equal('E');
-            expect(rotor2.wires['A']).to.be.equal('K');
+            assert.equal(rotor1.wires['A'], 'E');
+            assert.equal(rotor2.wires['A'], 'K');
         });
 
         it('expect turnover without next rotor maintain encoding', function() {
             var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
 
-            expect(rotor.wires['A']).to.be.equal('E');
+            assert.equal(rotor.wires['A'], 'E');
 
             for (var i = 0; i < 26; i++)
                 rotor.step();
 
-            expect(rotor.wires['A']).to.be.equal('E');
+            assert.equal(rotor.wires['A'], 'E');
         });
     });
 });
@@ -181,8 +181,8 @@ describe('Reflector', function() {
     describe('encode', function() {
         it('expect encode to return the opposite letter', function() {
                 var reflector = new Reflector();
-                expect(reflector.encode('A')).to.be.equal('Z');
-                expect(reflector.encode('Z')).to.be.equal('A');
+                assert.equal(reflector.encode('A'), 'Z');
+                assert.equal(reflector.encode('Z'), 'A');
         });
     });
 });
@@ -192,7 +192,7 @@ describe('Enigma', function() {
         it('expect encode to return a letter different from the given one',
             function() {
                 var enigma = new Enigma();
-                expect(enigma.encode('A')).to.not.be.equal('A');
+                assert.notEqual(enigma.encode('A'), 'A');
         });
 
         it('expect encode with encoded letter to be the original one',
@@ -202,7 +202,7 @@ describe('Enigma', function() {
                 var output = enigma1.encode(input);
 
                 var enigma2 = new Enigma();
-                expect(enigma2.encode(output)).to.be.equal(input);
+                assert.equal(enigma2.encode(output), input);
         });
     });
 });
