@@ -19,196 +19,9 @@
  * - Enigma machine https://en.wikipedia.org/wiki/Enigma_machine
  * - Enigma simulator http://enigma.louisedade.co.uk/howitworks.html
  */
-var assert = require('assert');
 
 // All valid letters for this simulator
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-describe('Plugboard', function() {
-    describe('addPlug', function() {
-        it('expect add letter to plugs', function() {
-            var plugboard = new Plugboard();
-            plugboard.addPlug('A', 'B');
-            assert.equal(plugboard.plugs['A'], 'B');
-        });
-
-        it('expect add inverse letter to plugs', function() {
-            var plugboard = new Plugboard();
-            plugboard.addPlug('A', 'B');
-            assert.equal(plugboard.plugs['B'], 'A');
-        });
-    });
-
-    describe('encode', function() {
-        it('expect non-plugged letter encode to itself', function() {
-            var plugboard = new Plugboard();
-            assert.equal(plugboard.encode('A'), 'A');
-        });
-
-        it('expect plugged letter encode to its plug output', function() {
-            var plugboard = new Plugboard();
-            plugboard.addPlug('A', 'B');
-            assert.equal(plugboard.encode('A'), 'B');
-        });
-    });
-
-
-    describe('addPlugs', function() {
-        it('expect plugged letters encode to their plugs', function() {
-            var plugboard = new Plugboard();
-            plugboard.addPlugs('ABC', 'DEF');
-            assert.equal(plugboard.encode('A'), 'D');
-            assert.equal(plugboard.encode('B'), 'E');
-            assert.equal(plugboard.encode('C'), 'F');
-        });
-
-        it('expect non-plugged letters encode to themselves', function() {
-            var plugboard = new Plugboard();
-            plugboard.addPlugs('ABC', 'DEF');
-            assert.equal(plugboard.encode('G'), 'G');
-            assert.equal(plugboard.encode('H'), 'H');
-            assert.equal(plugboard.encode('I'), 'I');
-        });
-    });
-
-    describe('constructor', function() {
-        it('expect plugboard be configured through constructor', function() {
-            var plugboard = new Plugboard('ABC', 'DEF');
-            assert.equal(plugboard.encode('A'), 'D');
-            assert.equal(plugboard.encode('B'), 'E');
-            assert.equal(plugboard.encode('C'), 'F');
-            assert.equal(plugboard.encode('G'), 'G');
-            assert.equal(plugboard.encode('H'), 'H');
-            assert.equal(plugboard.encode('I'), 'I');
-        });
-
-        it('expect plugboard to be reciprocal', function() {
-            var plugboard = new Plugboard('ABC', 'DEF');
-            assert.equal(plugboard.encode('D'), 'A');
-            assert.equal(plugboard.encode('E'), 'B');
-            assert.equal(plugboard.encode('F'), 'C');
-        });
-    });
-});
-
-describe('Rotor', function() {
-    describe('addWire', function() {
-        it('expect add wiring to rotor', function() {
-            var rotor = new Rotor();
-            rotor.addWire('A', 'B');
-            assert.equal(rotor.wires['A'], 'B');
-        });
-    });
-
-    describe('setWireTable', function() {
-        it('expect rotor wire table to configure wires', function() {
-            var rotor = new Rotor();
-            rotor.setWireTable('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            assert.equal(rotor.wires['A'], 'E');
-            assert.equal(rotor.wires['B'], 'K');
-            assert.equal(rotor.wires['Z'], 'J');
-        });
-    });
-
-    describe('encode', function() {
-        it('expect rotor to encode with wire table', function() {
-            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            assert.equal(rotor.encode('A'), 'E');
-            assert.equal(rotor.encode('B'), 'K');
-            assert.equal(rotor.encode('Z'), 'J');
-        });
-
-        it('expect rotor without step encode output to input', function() {
-            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            assert.equal(rotor.encode('A'), 'E');
-            assert.equal(rotor.encode('E', inverse = true), 'A');
-        });
-    });
-
-    describe('constructor', function() {
-        it('expect rotor be configured through constructor', function() {
-            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            assert.equal(rotor.wires['A'], 'E');
-            assert.equal(rotor.wires['B'], 'K');
-            assert.equal(rotor.wires['Z'], 'J');
-        });
-    });
-
-    describe('step', function() {
-        it('expect step change first encoded letter', function() {
-            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            assert.equal(rotor.wires['A'], 'E');
-            rotor.step();
-            assert.equal(rotor.wires['A'], 'K');
-        });
-
-        it('expect step change last encoded letter', function() {
-            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            assert.equal(rotor.wires['Z'], 'J');
-            rotor.step();
-            assert.equal(rotor.wires['Z'], 'E');
-        });
-    });
-
-    describe('turnover', function() {
-        it('expect turnover to be reached after 26 steps', function() {
-            var rotor1 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-            var rotor2 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-
-            rotor1.nextRotor = rotor2;
-
-            assert.equal(rotor1.wires['A'], 'E');
-            assert.equal(rotor2.wires['A'], 'E');
-
-            for (var i = 0; i < 26; i++)
-                rotor1.step();
-
-            assert.equal(rotor1.wires['A'], 'E');
-            assert.equal(rotor2.wires['A'], 'K');
-        });
-
-        it('expect turnover without next rotor maintain encoding', function() {
-            var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-
-            assert.equal(rotor.wires['A'], 'E');
-
-            for (var i = 0; i < 26; i++)
-                rotor.step();
-
-            assert.equal(rotor.wires['A'], 'E');
-        });
-    });
-});
-
-describe('Reflector', function() {
-    describe('encode', function() {
-        it('expect encode to return the opposite letter', function() {
-                var reflector = new Reflector();
-                assert.equal(reflector.encode('A'), 'Z');
-                assert.equal(reflector.encode('Z'), 'A');
-        });
-    });
-});
-
-describe('Enigma', function() {
-    describe('encode', function() {
-        it('expect encode to return a letter different from the given one',
-            function() {
-                var enigma = new Enigma();
-                assert.notEqual(enigma.encode('A'), 'A');
-        });
-
-        it('expect encode with encoded letter to be the original one',
-            function() {
-                var enigma1 = new Enigma();
-                var input = 'A';
-                var output = enigma1.encode(input);
-
-                var enigma2 = new Enigma();
-                assert.equal(enigma2.encode(output), input);
-        });
-    });
-});
 
 var Plugboard = function(letters1, letters2) {
     this.plugs = {};
@@ -304,13 +117,13 @@ Reflector.prototype.encode = function(letter) {
     return this.reflectionTable[letter];
 };
 
-var Enigma = function() {
+var Machine = function() {
     this.plugboard = new Plugboard('A', 'B');
     this.rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
     this.reflector = new Reflector();
 };
 
-Enigma.prototype.encode = function(letter) {
+Machine.prototype.encode = function(letter) {
     var plugboardInput = this.plugboard.encode(letter);
     var rotorInput = this.rotor.encode(plugboardInput);
     var reflectorOutput = this.reflector.encode(rotorInput);
@@ -318,4 +131,11 @@ Enigma.prototype.encode = function(letter) {
     var plugboardOutput = this.plugboard.encode(rotorOutput);
 
     return plugboardOutput;
+};
+
+module.exports = {
+    Plugboard: Plugboard,
+    Rotor: Rotor,
+    Reflector: Reflector,
+    Machine: Machine
 };
