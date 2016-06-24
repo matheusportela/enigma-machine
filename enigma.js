@@ -56,6 +56,10 @@ var Rotor = function(wireTable) {
         this.setWireTable(wireTable);
 };
 
+Rotor.prototype.setNextRotor = function(rotor) {
+    this.nextRotor = rotor;
+};
+
 Rotor.prototype.setTurnoverLetter = function(letter) {
     var initialCode = 'A'.charCodeAt(0);
     var letterCode = letter.charCodeAt(0);
@@ -129,8 +133,8 @@ var Machine = function() {
         new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ')
     ];
 
-    this.rotors[0].nextRotor = this.rotors[1];
-    this.rotors[1].nextRotor = this.rotors[2];
+    this.rotors[0].setNextRotor(this.rotors[1]);
+    this.rotors[1].setNextRotor(this.rotors[2]);
 
     this.reflector = new Reflector();
 };

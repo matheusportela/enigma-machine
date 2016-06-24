@@ -132,7 +132,7 @@ describe('Rotor', function() {
             var rotor1 = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
             var rotor2 = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
 
-            rotor1.nextRotor = rotor2;
+            rotor1.setNextRotor(rotor2);
 
             assert.equal(rotor1.wires['A'], 'E');
             assert.equal(rotor2.wires['A'], 'E');
@@ -168,7 +168,7 @@ describe('Rotor', function() {
             var rotor2 = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
 
             rotor1.setTurnoverLetter('R');
-            rotor1.nextRotor = rotor2;
+            rotor1.setNextRotor(rotor2);
 
             assert.equal(rotor2.wires['A'], 'E');
 
