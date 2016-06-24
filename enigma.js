@@ -68,8 +68,6 @@ Rotor.prototype.setWireTable = function(wireTable) {
 };
 
 Rotor.prototype.encode = function(letter, inverse) {
-    inverse = typeof inverse !== 'undefined' ? inverse : false;
-
     if (inverse)
         return this.inverseWires[letter];
     return this.wires[letter];
@@ -155,7 +153,7 @@ Machine.prototype.encodeWithRotors = function(letter) {
 
 Machine.prototype.encodeInverseWithRotors = function(letter) {
     for (var i = this.rotors.length - 1; i >= 0; i--) {
-        output = this.rotors[i].encode(letter, inverse = true);
+        output = this.rotors[i].encode(letter, true);
         letter = output;
     }
 

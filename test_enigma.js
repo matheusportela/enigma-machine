@@ -98,7 +98,7 @@ describe('Rotor', function() {
         it('expect rotor without step encode output to input', function() {
             var rotor = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
             assert.equal(rotor.encode('A'), 'E');
-            assert.equal(rotor.encode('E', inverse = true), 'A');
+            assert.equal(rotor.encode('E', true), 'A');
         });
     });
 
@@ -227,9 +227,9 @@ describe('Machine', function() {
             var machine = new enigma.Machine();
             var expectedOutput = machine.rotors[0].encode(
                 machine.rotors[1].encode(
-                    machine.rotors[2].encode('A', inverse = true),
-                    inverse = true),
-                inverse = true);
+                    machine.rotors[2].encode('A', true),
+                    true),
+                true);
             assert.equal(machine.encodeInverseWithRotors('A'), expectedOutput);
         });
     });
