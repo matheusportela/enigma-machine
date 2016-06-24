@@ -168,6 +168,19 @@ describe('Reflector', function() {
 });
 
 describe('Machine', function() {
+    describe('constructor', function() {
+        it('expect three rotors encoding letter', function() {
+            var machine = new enigma.Machine();
+            assert.equal(machine.rotors.length, 3);
+        });
+
+        it('expect rotors connected for turnover', function() {
+            var machine = new enigma.Machine();
+            assert.equal(machine.rotors[0].nextRotor, machine.rotors[1]);
+            assert.equal(machine.rotors[1].nextRotor, machine.rotors[2]);
+        });
+    });
+
     describe('encode', function() {
         it('expect encode to return a letter different from the given one',
             function() {
@@ -183,6 +196,41 @@ describe('Machine', function() {
 
                 var machine_decode = new enigma.Machine();
                 assert.equal(machine_decode.encode(output), input);
+        });
+
+        it('expect rotor 0 turnover and increase rotor 1 by one step after ' +
+            '26 encodes', function() {
+            var machine = new enigma.Machine();
+            var initialCountdown = machine.rotors[1].turnoverCountdown;
+
+            for (var i = 0; i < 26; i++)
+                machine.encode('A');
+
+            var finalCountdown = machine.rotors[1].turnoverCountdown;
+
+            assert.equal(finalCountdown, initialCountdown - 1);
+        });
+    });
+
+    describe('encodeWithRotors', function() {
+        it('expect encoding pass through all rotors', function() {
+            var machine = new enigma.Machine();
+            var expectedOutput = machine.rotors[2].encode(
+                machine.rotors[1].encode(
+                    machine.rotors[0].encode('A')));
+            assert.equal(machine.encodeWithRotors('A'), expectedOutput);
+        });
+    });
+
+    describe('encodeInverseWithRotors', function() {
+        it('expect encoding inverse pass through all rotors', function() {
+            var machine = new enigma.Machine();
+            var expectedOutput = machine.rotors[0].encode(
+                machine.rotors[1].encode(
+                    machine.rotors[2].encode('A', inverse = true),
+                    inverse = true),
+                inverse = true);
+            assert.equal(machine.encodeInverseWithRotors('A'), expectedOutput);
         });
     });
 });

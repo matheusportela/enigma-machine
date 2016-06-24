@@ -68,7 +68,7 @@ Rotor.prototype.setWireTable = function(wireTable) {
 };
 
 Rotor.prototype.encode = function(letter, inverse) {
-    var inverse = typeof inverse !== 'undefined' ? inverse : false;
+    inverse = typeof inverse !== 'undefined' ? inverse : false;
 
     if (inverse)
         return this.inverseWires[letter];
@@ -119,18 +119,47 @@ Reflector.prototype.encode = function(letter) {
 
 var Machine = function() {
     this.plugboard = new Plugboard('A', 'B');
-    this.rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+    this.rotors = [
+        new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ'),
+        new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ'),
+        new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ')
+    ];
+
+    this.rotors[0].nextRotor = this.rotors[1];
+    this.rotors[1].nextRotor = this.rotors[2];
+
     this.reflector = new Reflector();
 };
 
 Machine.prototype.encode = function(letter) {
-    var plugboardInput = this.plugboard.encode(letter);
-    var rotorInput = this.rotor.encode(plugboardInput);
-    var reflectorOutput = this.reflector.encode(rotorInput);
-    var rotorOutput = this.rotor.encode(reflectorOutput, inverse = true);
-    var plugboardOutput = this.plugboard.encode(rotorOutput);
+    var plugboardDirect = this.plugboard.encode(letter);
+    var rotorsDirect = this.encodeWithRotors(plugboardDirect);
+    var reflectorInverse = this.reflector.encode(rotorsDirect);
+    var rotorsInverse = this.encodeInverseWithRotors(reflectorInverse);
+    var plugboardInverse = this.plugboard.encode(rotorsInverse);
 
-    return plugboardOutput;
+    // Update rotor position after encoding
+    this.rotors[0].step();
+
+    return plugboardInverse;
+};
+
+Machine.prototype.encodeWithRotors = function(letter) {
+    for (var i = 0; i < this.rotors.length; i++) {
+        output = this.rotors[i].encode(letter);
+        letter = output;
+    }
+
+    return output;
+};
+
+Machine.prototype.encodeInverseWithRotors = function(letter) {
+    for (var i = this.rotors.length - 1; i >= 0; i--) {
+        output = this.rotors[i].encode(letter, inverse = true);
+        letter = output;
+    }
+
+    return output;
 };
 
 module.exports = {
