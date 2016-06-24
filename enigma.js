@@ -137,11 +137,17 @@ Reflector.prototype.encode = function(letter) {
 
 var Machine = function() {
     this.plugboard = new Plugboard('A', 'B');
-    this.rotors = [
-        new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ'),
-        new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ'),
-        new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ')
-    ];
+
+    var rotor1 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+    rotor1.setTurnoverLetter('R');
+
+    var rotor2 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+    rotor2.setTurnoverLetter('F');
+
+    var rotor3 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+    rotor3.setTurnoverLetter('K');
+
+    this.rotors = [rotor1, rotor2, rotor3];
 
     this.rotors[0].setNextRotor(this.rotors[1]);
     this.rotors[1].setNextRotor(this.rotors[2]);
