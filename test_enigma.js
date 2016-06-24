@@ -154,6 +154,33 @@ describe('Rotor', function() {
 
             assert.equal(rotor.wires['A'], 'E');
         });
+
+        it('expect rotor configure turnover letter',
+            function() {
+                var rotor = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+                rotor.setTurnoverLetter('R'); // 17º letter of the alphabet
+                assert.equal(rotor.turnoverCountdown, 17);
+        });
+
+        it('expect turnover with configured turnover letter to be reached ' +
+            'after 17 steps', function() {
+            var rotor1 = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            var rotor2 = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+
+            rotor1.setTurnoverLetter('R');
+            rotor1.nextRotor = rotor2;
+
+            assert.equal(rotor2.wires['A'], 'E');
+
+            for (var i = 0; i < 16; i++)
+                rotor1.step();
+
+            assert.equal(rotor2.wires['A'], 'E');
+
+            rotor1.step();
+
+            assert.equal(rotor2.wires['A'], 'K');
+        });
     });
 });
 

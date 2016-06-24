@@ -56,6 +56,12 @@ var Rotor = function(wireTable) {
         this.setWireTable(wireTable);
 };
 
+Rotor.prototype.setTurnoverLetter = function(letter) {
+    var initialCode = 'A'.charCodeAt(0);
+    var letterCode = letter.charCodeAt(0);
+    this.turnoverCountdown = letterCode - initialCode;
+};
+
 Rotor.prototype.addWire = function(letter1, letter2) {
     this.wires[letter1] = letter2;
 };
