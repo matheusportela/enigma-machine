@@ -100,6 +100,13 @@ describe('Rotor', function() {
             assert.equal(rotor.encode('A'), 'E');
             assert.equal(rotor.encode('E', true), 'A');
         });
+
+        it('expect encode with initial position to correspond to the letter',
+            function() {
+                var rotor = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+                rotor.setInitialPosition(1);
+                assert.equal(rotor.encode('A'), 'K');
+        });
     });
 
     describe('constructor', function() {
@@ -180,6 +187,17 @@ describe('Rotor', function() {
             rotor1.step();
 
             assert.equal(rotor2.wires['A'], 'K');
+        });
+
+        it('expect encode with initial position not turnover', function() {
+            var rotor1 = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            var rotor2 = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+
+            rotor1.setNextRotor(rotor2);
+            rotor1.setTurnoverLetter('B');
+            rotor1.setInitialPosition(1);
+
+            assert.equal(rotor2.wires['A'], 'E');
         });
     });
 });

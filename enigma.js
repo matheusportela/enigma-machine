@@ -56,6 +56,16 @@ var Rotor = function(wireTable) {
         this.setWireTable(wireTable);
 };
 
+Rotor.prototype.setInitialPosition = function(initialPosition) {
+    var nextRotor = this.nextRotor;
+    this.nextRotor = null;
+
+    for (var i = 0; i < initialPosition; i++)
+        this.step();
+
+    this.nextRotor = nextRotor;
+};
+
 Rotor.prototype.setNextRotor = function(rotor) {
     this.nextRotor = rotor;
 };
