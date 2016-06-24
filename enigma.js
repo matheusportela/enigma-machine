@@ -21,6 +21,9 @@
  */
 var assert = require('assert');
 
+// All valid letters for this simulator
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
 describe('Plugboard', function() {
     describe('addPlug', function() {
         it('expect add letter to plugs', function() {
@@ -231,7 +234,6 @@ Plugboard.prototype.encode = function(letter) {
 };
 
 var Rotor = function(wireTable) {
-    this.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     this.wires = {};
     this.inverseWires = {};
     this.nextRotor = null;
@@ -246,9 +248,9 @@ Rotor.prototype.addWire = function(letter1, letter2) {
 };
 
 Rotor.prototype.setWireTable = function(wireTable) {
-    for (var i = 0; i < this.letters.length; i++) {
-        this.wires[this.letters[i]] = wireTable[i];
-        this.inverseWires[wireTable[i]] = this.letters[i];
+    for (var i = 0; i < LETTERS.length; i++) {
+        this.wires[LETTERS[i]] = wireTable[i];
+        this.inverseWires[wireTable[i]] = LETTERS[i];
     }
 };
 
@@ -265,9 +267,9 @@ Rotor.prototype.step = function() {
     var currentLetter;
     var nextLetter;
 
-    for (var i = 0; i < this.letters.length; i++) {
-        currentLetter = this.letters[i];
-        nextLetter = this.letters[(i + 1) % this.letters.length];
+    for (var i = 0; i < LETTERS.length; i++) {
+        currentLetter = LETTERS[i];
+        nextLetter = LETTERS[(i + 1) % LETTERS.length];
         new_wires[currentLetter] = this.wires[nextLetter];
     }
 
@@ -288,12 +290,11 @@ Rotor.prototype.turnover = function() {
 };
 
 var Reflector = function() {
-    this.letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     this.reflectionTable = {};
 
-    for (var i = 0; i < this.letters.length/2; i++) {
-        letter1 = this.letters[i];
-        letter2 = this.letters[25 - i];
+    for (var i = 0; i < LETTERS.length/2; i++) {
+        letter1 = LETTERS[i];
+        letter2 = LETTERS[25 - i];
         this.reflectionTable[letter1] = letter2;
         this.reflectionTable[letter2] = letter1;
     }
