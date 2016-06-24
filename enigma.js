@@ -21,7 +21,7 @@
  */
 
 // All valid letters for this simulator
-const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 var Plugboard = function(letters1, letters2) {
     this.plugs = {};
