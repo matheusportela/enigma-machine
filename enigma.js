@@ -165,8 +165,29 @@ var Reflector = function() {
     }
 };
 
+Reflector.prototype.setReflectionTable = function(reflectionTable) {
+    for (var i = 0; i < LETTERS.length/2; i++) {
+        letter1 = LETTERS[i];
+        letter2 = reflectionTable[i];
+        this.reflectionTable[letter1] = letter2;
+        this.reflectionTable[letter2] = letter1;
+    }
+};
+
 Reflector.prototype.encode = function(letter) {
     return this.reflectionTable[letter];
+};
+
+var ReflectorB = function() {
+    var reflector = new Reflector();
+    reflector.setReflectionTable('YRUHQSLDPXNGOKMIEBFZCWVJAT');
+    return reflector;
+};
+
+var ReflectorC = function() {
+    var reflector = new Reflector();
+    reflector.setReflectionTable('FVPJIAOYEDRZXWGCTKUQSBNMHL');
+    return reflector;
 };
 
 var Machine = function() {
@@ -230,5 +251,7 @@ module.exports = {
     RotorIV: RotorIV,
     RotorV: RotorV,
     Reflector: Reflector,
+    ReflectorB: ReflectorB,
+    ReflectorC: ReflectorC,
     Machine: Machine
 };

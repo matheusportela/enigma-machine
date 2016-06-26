@@ -287,6 +287,37 @@ describe('Reflector', function() {
     });
 });
 
+describe('Reflector Models', function() {
+    var assertReflectionTable = function(reflectorPrototype, reflectionTable) {
+        var reflector = new reflectorPrototype();
+        var reflectorReflectionTable = Object.assign({},
+            reflector.reflectionTable);
+
+        reflector.setReflectionTable(reflectionTable);
+
+        for (var i = 0; i < enigma.LETTERS.length; i++) {
+            assert.equal(
+                reflectorReflectionTable[enigma.LETTERS[i]],
+                reflector.reflectionTable[enigma.LETTERS[i]]
+            );
+        }
+    };
+
+    describe('Reflector B', function() {
+        it('expect reflection table be correctly defined', function() {
+            assertReflectionTable(enigma.ReflectorB,
+                'YRUHQSLDPXNGOKMIEBFZCWVJAT');
+        });
+    });
+
+    describe('Reflector C', function() {
+        it('expect reflection table be correctly defined', function() {
+            assertReflectionTable(enigma.ReflectorC,
+                'FVPJIAOYEDRZXWGCTKUQSBNMHL');
+        });
+    });
+});
+
 describe('Machine', function() {
     describe('constructor', function() {
         it('expect three rotors encoding letter', function() {
