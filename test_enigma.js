@@ -104,7 +104,7 @@ describe('Rotor', function() {
         it('expect encode with initial position to correspond to the letter',
             function() {
                 var rotor = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-                rotor.setInitialPosition(1);
+                rotor.setInitialPosition('B');
                 assert.equal(rotor.encode('A'), 'K');
         });
     });
@@ -202,7 +202,7 @@ describe('Rotor', function() {
 
             rotor1.setNextRotor(rotor2);
             rotor1.setTurnoverLetter('B');
-            rotor1.setInitialPosition(1);
+            rotor1.setInitialPosition('B');
 
             assert.equal(rotor2.wires['A'], 'E');
         });

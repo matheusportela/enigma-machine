@@ -61,10 +61,11 @@ var Rotor = function(wiringTable) {
 };
 
 Rotor.prototype.setInitialPosition = function(initialPosition) {
+    var letterCode = initialPosition.charCodeAt(0) - 'A'.charCodeAt(0);
     var nextRotor = this.nextRotor;
     this.nextRotor = null;
 
-    for (var i = 0; i < initialPosition; i++)
+    for (var i = 0; i < letterCode; i++)
         this.step();
 
     this.nextRotor = nextRotor;
@@ -75,9 +76,7 @@ Rotor.prototype.setNextRotor = function(rotor) {
 };
 
 Rotor.prototype.setTurnoverLetter = function(letter) {
-    var initialCode = 'A'.charCodeAt(0);
-    var letterCode = letter.charCodeAt(0);
-    this.turnoverCountdown = letterCode - initialCode;
+    this.turnoverCountdown = letter.charCodeAt(0) - 'A'.charCodeAt(0);
 };
 
 Rotor.prototype.addWire = function(letter1, letter2) {
