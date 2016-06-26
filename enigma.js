@@ -18,6 +18,10 @@
  * References:
  * - Enigma machine https://en.wikipedia.org/wiki/Enigma_machine
  * - Enigma simulator http://enigma.louisedade.co.uk/howitworks.html
+ * - Technical details on the Enigma machine
+ *     http://users.telenet.be/d.rijmenants/en/enigmatech.htm
+ * - Enigma cipher machine simulator 7.0.6
+ *     http://users.telenet.be/d.rijmenants/Enigma%20Sim%20Manual.pdf
  */
 
 // All valid letters for this simulator
