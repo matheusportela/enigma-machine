@@ -46,14 +46,14 @@ Plugboard.prototype.encode = function(letter) {
     return letter;
 };
 
-var Rotor = function(wireTable) {
+var Rotor = function(wiringTable) {
     this.wires = {};
     this.inverseWires = {};
     this.nextRotor = null;
     this.turnoverCountdown = 26;
 
-    if (wireTable)
-        this.setWireTable(wireTable);
+    if (wiringTable)
+        this.setWiringTable(wiringTable);
 };
 
 Rotor.prototype.setInitialPosition = function(initialPosition) {
@@ -80,10 +80,10 @@ Rotor.prototype.addWire = function(letter1, letter2) {
     this.wires[letter1] = letter2;
 };
 
-Rotor.prototype.setWireTable = function(wireTable) {
+Rotor.prototype.setWiringTable = function(wiringTable) {
     for (var i = 0; i < LETTERS.length; i++) {
-        this.wires[LETTERS[i]] = wireTable[i];
-        this.inverseWires[wireTable[i]] = LETTERS[i];
+        this.wires[LETTERS[i]] = wiringTable[i];
+        this.inverseWires[wiringTable[i]] = LETTERS[i];
     }
 };
 

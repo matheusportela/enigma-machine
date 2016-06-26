@@ -77,10 +77,10 @@ describe('Rotor', function() {
         });
     });
 
-    describe('setWireTable', function() {
+    describe('setWiringTable', function() {
         it('expect rotor wire table to configure wires', function() {
             var rotor = new enigma.Rotor();
-            rotor.setWireTable('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            rotor.setWiringTable('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
             assert.equal(rotor.wires['A'], 'E');
             assert.equal(rotor.wires['B'], 'K');
             assert.equal(rotor.wires['Z'], 'J');
