@@ -125,13 +125,12 @@ Rotor.prototype.updateInverseWires = function() {
 };
 
 Rotor.prototype.turnover = function() {
-    if (this.nextRotor) {
-        this.turnoverCountdown -= 1;
+    this.turnoverCountdown -= 1;
 
-        if (this.turnoverCountdown === 0) {
+    if (this.turnoverCountdown === 0) {
+        if (this.nextRotor)
             this.nextRotor.step();
-            this.turnoverCountdown = 26;
-        }
+        this.turnoverCountdown = 26;
     }
 };
 
@@ -221,6 +220,14 @@ Machine.prototype.setReflector = function(reflector) {
 };
 
 Machine.prototype.encode = function(letter) {
+    // Double stepping anomaly
+    // Rotors turns over the rotor on their right as well. This is not noticed
+    // in rotor 0 because it always steps anyway.
+    if (this.rotors[1].turnoverCountdown == 1 &&
+        this.rotors[2].turnoverCountdown == 1) {
+        this.rotors[1].step();
+    }
+
     // Update rotor position after encoding
     this.rotors[0].step();
 

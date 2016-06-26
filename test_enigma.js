@@ -206,6 +206,18 @@ describe('Rotor', function() {
 
             assert.equal(rotor2.wires['A'], 'E');
         });
+
+        it('expect encode with initial position turnover after step',
+            function() {
+                var rotor1 = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+                var rotor2 = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+
+                rotor1.setNextRotor(rotor2);
+                rotor1.setTurnoverLetter('B');
+                rotor1.setInitialPosition('A ');
+                rotor1.step();
+                assert.equal(rotor2.encode('A'), 'K');
+        });
     });
 });
 
@@ -412,6 +424,44 @@ describe('Machine', function() {
             var finalCountdown = machine.rotors[1].turnoverCountdown;
 
             assert.equal(finalCountdown, initialCountdown - 1);
+        });
+
+        it('expect double stepping anomaly exists', function() {
+            var rotor0 = new enigma.RotorI();
+            rotor0.setInitialPosition('Q');
+
+            var rotor1 = new enigma.RotorII();
+            rotor1.setInitialPosition('D');
+
+            var rotor2 = new enigma.RotorIII();
+            rotor2.setInitialPosition('V');
+
+            var machine = new enigma.Machine();
+            machine.setRotors(rotor0, rotor1, rotor2);
+            machine.setPlugboard(new enigma.Plugboard('A', 'B'));
+            machine.setReflector(new enigma.ReflectorB());
+
+            // Assert first step
+            var rotor1WiringTable = Object.assign({}, rotor1.wires);
+            machine.encode('A');
+
+            for (var i = 0; i < enigma.LETTERS.length; i++) {
+                assert.notEqual(
+                    rotor1WiringTable[enigma.LETTERS[i]],
+                    rotor1.wires[enigma.LETTERS[i]]
+                );
+            }
+
+            // Assert second step
+            var rotor1WiringTable = Object.assign({}, rotor1.wires);
+            machine.encode('A');
+
+            for (var i = 0; i < enigma.LETTERS.length; i++) {
+                assert.notEqual(
+                    rotor1WiringTable[enigma.LETTERS[i]],
+                    rotor1.wires[enigma.LETTERS[i]]
+                );
+            }
         });
     });
 
