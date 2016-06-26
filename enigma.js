@@ -124,6 +124,36 @@ Rotor.prototype.turnover = function() {
     }
 };
 
+var RotorI = function() {
+    var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+    rotor.setTurnoverLetter('R');
+    return rotor;
+};
+
+var RotorII = function() {
+    var rotor = new Rotor('AJDKSIRUXBLHWTMCQGZNPYFVOE');
+    rotor.setTurnoverLetter('F');
+    return rotor;
+};
+
+var RotorIII = function() {
+    var rotor = new Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO');
+    rotor.setTurnoverLetter('W');
+    return rotor;
+};
+
+var RotorIV = function() {
+    var rotor = new Rotor('ESOVPZJAYQUIRHXLNFTGKDCMWB');
+    rotor.setTurnoverLetter('K');
+    return rotor;
+};
+
+var RotorV = function() {
+    var rotor = new Rotor('VZBRGITYUPSDNHLXAWMJQOFECK');
+    rotor.setTurnoverLetter('A');
+    return rotor;
+};
+
 var Reflector = function() {
     this.reflectionTable = {};
 
@@ -141,18 +171,7 @@ Reflector.prototype.encode = function(letter) {
 
 var Machine = function() {
     this.plugboard = new Plugboard('A', 'B');
-
-    var rotor1 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-    rotor1.setTurnoverLetter('R');
-
-    var rotor2 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-    rotor2.setTurnoverLetter('F');
-
-    var rotor3 = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-    rotor3.setTurnoverLetter('K');
-
-    this.rotors = [rotor1, rotor2, rotor3];
-
+    this.rotors = [new RotorI(), new RotorII(), new RotorIII()];
     this.rotors[0].setNextRotor(this.rotors[1]);
     this.rotors[1].setNextRotor(this.rotors[2]);
 
@@ -191,8 +210,14 @@ Machine.prototype.encodeInverseWithRotors = function(letter) {
 };
 
 module.exports = {
+    LETTERS: LETTERS,
     Plugboard: Plugboard,
     Rotor: Rotor,
+    RotorI: RotorI,
+    RotorII: RotorII,
+    RotorIII: RotorIII,
+    RotorIV: RotorIV,
+    RotorV: RotorV,
     Reflector: Reflector,
     Machine: Machine
 };

@@ -202,6 +202,81 @@ describe('Rotor', function() {
     });
 });
 
+describe('Rotor Models', function() {
+    var assertWiringTable = function(rotorPrototype, wiringTable) {
+        var rotor = new rotorPrototype();
+        var rotorWiringTable = Object.assign({}, rotor.wires);
+
+        rotor.setWiringTable(wiringTable);
+
+        for (var i = 0; i < enigma.LETTERS.length; i++) {
+            assert.equal(
+                rotorWiringTable[enigma.LETTERS[i]],
+                rotor.wires[enigma.LETTERS[i]]
+            );
+        }
+    };
+
+    var assertTurnoverLetter = function(rotorPrototype, turnoverLetter) {
+        var rotor = new rotorPrototype();
+        var turnoverCountdown = rotor.turnoverCountdown;
+
+        rotor.setTurnoverLetter(turnoverLetter);
+
+        assert.equal(turnoverCountdown, rotor.turnoverCountdown);
+    };
+
+    describe('Rotor I', function() {
+        it('expect wiring table be correctly defined', function() {
+            assertWiringTable(enigma.RotorI, 'EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+        });
+
+        it('expect turnover letter be correctly defined', function() {
+            assertTurnoverLetter(enigma.RotorI, 'R');
+        });
+    });
+
+    describe('Rotor II', function() {
+        it('expect wiring table be correctly defined', function() {
+            assertWiringTable(enigma.RotorII, 'AJDKSIRUXBLHWTMCQGZNPYFVOE');
+        });
+
+        it('expect turnover letter be correctly defined', function() {
+            assertTurnoverLetter(enigma.RotorII, 'F');
+        });
+    });
+
+    describe('Rotor III', function() {
+        it('expect wiring table be correctly defined', function() {
+            assertWiringTable(enigma.RotorIII, 'BDFHJLCPRTXVZNYEIWGAKMUSQO');
+        });
+
+        it('expect turnover letter be correctly defined', function() {
+            assertTurnoverLetter(enigma.RotorIII, 'W');
+        });
+    });
+
+    describe('Rotor IV', function() {
+        it('expect wiring table be correctly defined', function() {
+            assertWiringTable(enigma.RotorIV, 'ESOVPZJAYQUIRHXLNFTGKDCMWB');
+        });
+
+        it('expect turnover letter be correctly defined', function() {
+            assertTurnoverLetter(enigma.RotorIV, 'K');
+        });
+    });
+
+    describe('Rotor V', function() {
+        it('expect wiring table be correctly defined', function() {
+            assertWiringTable(enigma.RotorV, 'VZBRGITYUPSDNHLXAWMJQOFECK');
+        });
+
+        it('expect turnover letter be correctly defined', function() {
+            assertTurnoverLetter(enigma.RotorV, 'A');
+        });
+    });
+});
+
 describe('Reflector', function() {
     describe('encode', function() {
         it('expect encode to return the opposite letter', function() {
