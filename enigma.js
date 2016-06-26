@@ -166,11 +166,10 @@ var Reflector = function() {
 };
 
 Reflector.prototype.setReflectionTable = function(reflectionTable) {
-    for (var i = 0; i < LETTERS.length/2; i++) {
+    for (var i = 0; i < LETTERS; i++) {
         letter1 = LETTERS[i];
         letter2 = reflectionTable[i];
         this.reflectionTable[letter1] = letter2;
-        this.reflectionTable[letter2] = letter1;
     }
 };
 
