@@ -291,11 +291,21 @@ describe('Machine', function() {
     describe('constructor', function() {
         it('expect three rotors encoding letter', function() {
             var machine = new enigma.Machine();
+            machine.setPlugboard(new enigma.Plugboard('A', 'B'));
+            machine.setRotors(new enigma.RotorI(), new enigma.RotorII(),
+                new enigma.RotorIII());
+            machine.setReflector(new enigma.Reflector());
+
             assert.equal(machine.rotors.length, 3);
         });
 
         it('expect rotors connected for turnover', function() {
             var machine = new enigma.Machine();
+            machine.setPlugboard(new enigma.Plugboard('A', 'B'));
+            machine.setRotors(new enigma.RotorI(), new enigma.RotorII(),
+                new enigma.RotorIII());
+            machine.setReflector(new enigma.Reflector());
+
             assert.equal(machine.rotors[0].nextRotor, machine.rotors[1]);
             assert.equal(machine.rotors[1].nextRotor, machine.rotors[2]);
         });
@@ -305,22 +315,42 @@ describe('Machine', function() {
         it('expect encode to return a letter different from the given one',
             function() {
                 var machine = new enigma.Machine();
+                machine.setPlugboard(new enigma.Plugboard('A', 'B'));
+                machine.setRotors(new enigma.RotorI(), new enigma.RotorII(),
+                    new enigma.RotorIII());
+                machine.setReflector(new enigma.Reflector());
+
                 assert.notEqual(machine.encode('A'), 'A');
         });
 
         it('expect encode with encoded letter to be the original one',
             function() {
                 var machine_encode = new enigma.Machine();
+                machine_encode.setPlugboard(new enigma.Plugboard('A', 'B'));
+                machine_encode.setRotors(new enigma.RotorI(),
+                    new enigma.RotorII(), new enigma.RotorIII());
+                machine_encode.setReflector(new enigma.Reflector());
+
                 var input = 'A';
                 var output = machine_encode.encode(input);
 
                 var machine_decode = new enigma.Machine();
+                machine_decode.setPlugboard(new enigma.Plugboard('A', 'B'));
+                machine_decode.setRotors(new enigma.RotorI(),
+                    new enigma.RotorII(), new enigma.RotorIII());
+                machine_decode.setReflector(new enigma.Reflector());
+
                 assert.equal(machine_decode.encode(output), input);
         });
 
         it('expect rotor 0 turnover and increase rotor 1 by one step after ' +
             '26 encodes', function() {
             var machine = new enigma.Machine();
+            machine.setPlugboard(new enigma.Plugboard('A', 'B'));
+            machine.setRotors(new enigma.RotorI(), new enigma.RotorII(),
+                new enigma.RotorIII());
+            machine.setReflector(new enigma.Reflector());
+
             var initialCountdown = machine.rotors[1].turnoverCountdown;
 
             for (var i = 0; i < 26; i++)
@@ -335,6 +365,11 @@ describe('Machine', function() {
     describe('encodeWithRotors', function() {
         it('expect encoding pass through all rotors', function() {
             var machine = new enigma.Machine();
+            machine.setPlugboard(new enigma.Plugboard('A', 'B'));
+            machine.setRotors(new enigma.RotorI(), new enigma.RotorII(),
+                new enigma.RotorIII());
+            machine.setReflector(new enigma.Reflector());
+
             var expectedOutput = machine.rotors[2].encode(
                 machine.rotors[1].encode(
                     machine.rotors[0].encode('A')));
@@ -345,6 +380,11 @@ describe('Machine', function() {
     describe('encodeInverseWithRotors', function() {
         it('expect encoding inverse pass through all rotors', function() {
             var machine = new enigma.Machine();
+            machine.setPlugboard(new enigma.Plugboard('A', 'B'));
+            machine.setRotors(new enigma.RotorI(), new enigma.RotorII(),
+                new enigma.RotorIII());
+            machine.setReflector(new enigma.Reflector());
+
             var expectedOutput = machine.rotors[0].encode(
                 machine.rotors[1].encode(
                     machine.rotors[2].encode('A', true),

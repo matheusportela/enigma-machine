@@ -170,12 +170,23 @@ Reflector.prototype.encode = function(letter) {
 };
 
 var Machine = function() {
-    this.plugboard = new Plugboard('A', 'B');
-    this.rotors = [new RotorI(), new RotorII(), new RotorIII()];
+    this.plugboard = null;
+    this.rotors = null;
+    this.reflector = null;
+};
+
+Machine.prototype.setPlugboard = function(plugboard) {
+    this.plugboard = plugboard;
+};
+
+Machine.prototype.setRotors = function(rotor0, rotor1, rotor2) {
+    this.rotors = [rotor0, rotor1, rotor2];
     this.rotors[0].setNextRotor(this.rotors[1]);
     this.rotors[1].setNextRotor(this.rotors[2]);
+};
 
-    this.reflector = new Reflector();
+Machine.prototype.setReflector = function(reflector) {
+    this.reflector = reflector;
 };
 
 Machine.prototype.encode = function(letter) {
