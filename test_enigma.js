@@ -132,6 +132,13 @@ describe('Rotor', function() {
             rotor.step();
             assert.equal(rotor.wires['Z'], 'E');
         });
+
+        it('expect step change first inverse encoded letter', function() {
+            var rotor = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            assert.equal(rotor.encode('E', true), 'A');
+            rotor.step();
+            assert.equal(rotor.encode('K', true), 'A');
+        });
     });
 
     describe('turnover', function() {

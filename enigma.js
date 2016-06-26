@@ -98,19 +98,31 @@ Rotor.prototype.encode = function(letter, inverse) {
 };
 
 Rotor.prototype.step = function() {
-    var new_wires = {};
+    this.stepWires();
+    this.updateInverseWires();
+    this.turnover();
+};
+
+Rotor.prototype.stepWires = function() {
+    var newWires = {};
     var currentLetter;
     var nextLetter;
 
     for (var i = 0; i < LETTERS.length; i++) {
         currentLetter = LETTERS[i];
         nextLetter = LETTERS[(i + 1) % LETTERS.length];
-        new_wires[currentLetter] = this.wires[nextLetter];
+        newWires[currentLetter] = this.wires[nextLetter];
     }
 
-    this.wires = new_wires;
+    this.wires = newWires;
+};
 
-    this.turnover();
+Rotor.prototype.updateInverseWires = function() {
+    for (var i = 0; i < LETTERS.length; i++) {
+        letter = LETTERS[i];
+        encodedLetter = this.wires[letter];
+        this.inverseWires[encodedLetter] = letter;
+    }
 };
 
 Rotor.prototype.turnover = function() {
@@ -210,14 +222,14 @@ Machine.prototype.setReflector = function(reflector) {
 };
 
 Machine.prototype.encode = function(letter) {
+    // Update rotor position after encoding
+    this.rotors[0].step();
+
     var plugboardDirect = this.plugboard.encode(letter);
     var rotorsDirect = this.encodeWithRotors(plugboardDirect);
     var reflectorInverse = this.reflector.encode(rotorsDirect);
     var rotorsInverse = this.encodeInverseWithRotors(reflectorInverse);
     var plugboardInverse = this.plugboard.encode(rotorsInverse);
-
-    // Update rotor position after encoding
-    this.rotors[0].step();
 
     return plugboardInverse;
 };
