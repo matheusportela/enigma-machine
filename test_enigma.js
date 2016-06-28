@@ -214,9 +214,16 @@ describe('Rotor', function() {
 
                 rotor1.setNextRotor(rotor2);
                 rotor1.setTurnoverLetter('B');
-                rotor1.setInitialPosition('A ');
+                rotor1.setInitialPosition('A');
                 rotor1.step();
                 assert.equal(rotor2.encode('A'), 'K');
+        });
+
+        it('expect turnover countdown be always greater than zero',
+            function() {
+                var rotor = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+                rotor.setTurnoverLetter('A');
+                assert.equal(rotor.turnoverCountdown, 26);
         });
     });
 });
@@ -298,6 +305,20 @@ describe('Rotor Models', function() {
 
 describe('Reflector', function() {
     describe('setReflectionTable', function() {
+        it('expect reflection table to be correctly configured', function() {
+            var reflectionTable = 'YRUHQSLDPXNGOKMIEBFZCWVJAT'
+            var reflector = new enigma.Reflector();
+            reflector.setReflectionTable(reflectionTable);
+
+            for (var i = 0; i < enigma.LETTERS.length; i++) {
+                letter = enigma.LETTERS[i];
+                output = reflector.encode(letter);
+                expected = reflectionTable[i];
+
+                assert.equal(output, expected);
+            }
+        });
+
         it('expect reflection table be symmetric', function() {
             var reflector = new enigma.Reflector();
             reflector.setReflectionTable('YRUHQSLDPXNGOKMIEBFZCWVJAT');
@@ -313,10 +334,12 @@ describe('Reflector', function() {
     });
 
     describe('encode', function() {
-        it('expect encode to return the opposite letter', function() {
+        it('expect encode to use reflection table', function() {
                 var reflector = new enigma.Reflector();
-                assert.equal(reflector.encode('A'), 'Z');
-                assert.equal(reflector.encode('Z'), 'A');
+                assert.equal(reflector.encode('A'),
+                    reflector.reflectionTable['A']);
+                assert.equal(reflector.encode('Z'),
+                    reflector.reflectionTable['Z']);
         });
     });
 });
@@ -453,10 +476,10 @@ describe('Machine', function() {
             }
 
             // Assert second step
-            var rotor1WiringTable = Object.assign({}, rotor1.wires);
+            rotor1WiringTable = Object.assign({}, rotor1.wires);
             machine.encode('A');
 
-            for (var i = 0; i < enigma.LETTERS.length; i++) {
+            for (i = 0; i < enigma.LETTERS.length; i++) {
                 assert.notEqual(
                     rotor1WiringTable[enigma.LETTERS[i]],
                     rotor1.wires[enigma.LETTERS[i]]
@@ -494,6 +517,35 @@ describe('Machine', function() {
                     true),
                 true);
             assert.equal(machine.encodeInverseWithRotors('A'), expectedOutput);
+        });
+    });
+
+    describe('test machine against other implementation', function() {
+        // Reference:
+        // https://www.youtube.com/watch?v=4L6KtS0t75w
+        it('expect output be equal', function() {
+            var machine = new enigma.Machine();
+            machine.setPlugboard(new enigma.Plugboard('QG', 'EN'));
+            machine.setRotors(new enigma.RotorV(), new enigma.RotorII(),
+                new enigma.RotorI());
+            machine.setReflector(new enigma.ReflectorB());
+
+            console.log('0: ' + machine.rotors[0].turnoverCountdown);
+            console.log('1: ' + machine.rotors[1].turnoverCountdown);
+            console.log('2: ' + machine.rotors[2].turnoverCountdown);
+
+            var input = 'HELLO';
+            var output = '';
+            var expect = 'DJNPI';
+
+            for (var i = 0; i < input.length; i++) {
+                output += machine.encode(input[i]);
+                console.log('0: ' + machine.rotors[0].turnoverCountdown);
+                console.log('1: ' + machine.rotors[1].turnoverCountdown);
+                console.log('2: ' + machine.rotors[2].turnoverCountdown);
+            }
+
+            assert.equal(output, expect);
         });
     });
 });

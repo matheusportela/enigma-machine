@@ -77,6 +77,9 @@ Rotor.prototype.setNextRotor = function(rotor) {
 
 Rotor.prototype.setTurnoverLetter = function(letter) {
     this.turnoverCountdown = letter.charCodeAt(0) - 'A'.charCodeAt(0);
+
+    if (this.turnoverCountdown === 0)
+        this.turnoverCountdown = 26;
 };
 
 Rotor.prototype.addWire = function(letter1, letter2) {
@@ -136,51 +139,51 @@ Rotor.prototype.turnover = function() {
 
 var RotorI = function() {
     var rotor = new Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
-    rotor.setTurnoverLetter('R');
+    rotor.setTurnoverLetter('Q');
     return rotor;
 };
 
 var RotorII = function() {
     var rotor = new Rotor('AJDKSIRUXBLHWTMCQGZNPYFVOE');
-    rotor.setTurnoverLetter('F');
+    rotor.setTurnoverLetter('E');
     return rotor;
 };
 
 var RotorIII = function() {
     var rotor = new Rotor('BDFHJLCPRTXVZNYEIWGAKMUSQO');
-    rotor.setTurnoverLetter('W');
+    rotor.setTurnoverLetter('V');
     return rotor;
 };
 
 var RotorIV = function() {
     var rotor = new Rotor('ESOVPZJAYQUIRHXLNFTGKDCMWB');
-    rotor.setTurnoverLetter('K');
+    rotor.setTurnoverLetter('J');
     return rotor;
 };
 
 var RotorV = function() {
     var rotor = new Rotor('VZBRGITYUPSDNHLXAWMJQOFECK');
-    rotor.setTurnoverLetter('A');
+    rotor.setTurnoverLetter('Z');
     return rotor;
 };
 
 var Reflector = function() {
     this.reflectionTable = {};
 
-    for (var i = 0; i < LETTERS.length/2; i++) {
-        letter1 = LETTERS[i];
-        letter2 = LETTERS[25 - i];
-        this.reflectionTable[letter1] = letter2;
-        this.reflectionTable[letter2] = letter1;
-    }
+    for (var i = 0; i < LETTERS.length; i++)
+        this.reflectionTable[LETTERS[i]] = LETTERS[i];
 };
 
 Reflector.prototype.setReflectionTable = function(reflectionTable) {
-    for (var i = 0; i < LETTERS; i++) {
-        letter1 = LETTERS[i];
-        letter2 = reflectionTable[i];
-        this.reflectionTable[letter1] = letter2;
+    newReflectionTable = {};
+
+    for (var i = 0; i < LETTERS.length; i++) {
+        input = LETTERS[i];
+        output = reflectionTable[i];
+        newReflectionTable[input] = output;
     }
+
+    this.reflectionTable = newReflectionTable;
 };
 
 Reflector.prototype.encode = function(letter) {
