@@ -27,11 +27,13 @@
 // All valid letters for this simulator
 var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-var Plugboard = function(letters1, letters2) {
+var Plugboard = function() {
     this.plugs = {};
 
-    if (letters1 && letters2)
-        this.addPlugs(letters1, letters2);
+    for (var i = 0; i < arguments.length; i++) {
+        var letters = arguments[i];
+        this.addPlug(letters.charAt(0), letters.charAt(1));
+    }
 };
 
 Plugboard.prototype.addPlug = function(letter1, letter2) {
@@ -39,9 +41,11 @@ Plugboard.prototype.addPlug = function(letter1, letter2) {
     this.plugs[letter2] = letter1;
 };
 
-Plugboard.prototype.addPlugs = function(letters1, letters2) {
-    for (var i = 0; i < letters1.length; i++)
-        this.addPlug(letters1[i], letters2[i]);
+Plugboard.prototype.addPlugs = function() {
+    for (var i = 0; i < arguments.length; i++) {
+        var letters = arguments[i];
+        this.addPlug(letters.charAt(0), letters.charAt(1));
+    }
 };
 
 Plugboard.prototype.encode = function(letter) {
