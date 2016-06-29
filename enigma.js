@@ -31,11 +31,7 @@ var LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 var Plugboard = function() {
     this.plugs = {};
-
-    for (var i = 0; i < arguments.length; i++) {
-        var letters = arguments[i];
-        this.addPlug(letters.charAt(0), letters.charAt(1));
-    }
+    Plugboard.prototype.addPlugs.apply(this, arguments);
 };
 
 Plugboard.prototype.addPlug = function(letter1, letter2) {
