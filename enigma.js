@@ -22,6 +22,8 @@
  *     http://users.telenet.be/d.rijmenants/en/enigmatech.htm
  * - Enigma cipher machine simulator 7.0.6
  *     http://users.telenet.be/d.rijmenants/Enigma%20Sim%20Manual.pdf
+ * - Enigma simulator step by step
+ *     http://www.enigmaco.de/enigma/enigma.swf
  */
 
 // All valid letters for this simulator
@@ -213,6 +215,11 @@ var Machine = function() {
     this.reflector = null;
 };
 
+Machine.prototype.log = function(message) {
+    if (this.debug)
+        console.log(message);
+};
+
 Machine.prototype.setDebug = function(debug) {
     this.debug = debug;
 };
@@ -220,11 +227,9 @@ Machine.prototype.setDebug = function(debug) {
 Machine.prototype.setPlugboard = function(plugboard) {
     this.plugboard = plugboard;
 
-    if (this.debug) {
-        console.log('Machine plugboard table');
-        console.log(this.plugboard.plugs);
-        console.log('');
-    }
+    this.log('Machine plugboard table');
+    this.log(this.plugboard.plugs);
+    this.log('');
 };
 
 Machine.prototype.setRotors = function(rotor0, rotor1, rotor2) {
@@ -232,25 +237,21 @@ Machine.prototype.setRotors = function(rotor0, rotor1, rotor2) {
     this.rotors[0].setNextRotor(this.rotors[1]);
     this.rotors[1].setNextRotor(this.rotors[2]);
 
-    if (this.debug) {
-        console.log('Machine rotors table');
+    this.log('Machine rotors table');
 
-        for (var i = 0; i < this.rotors.length; i++) {
-            console.log('Rotor ' + i + ' table');
-            console.log(this.rotors[i].wires);
-            console.log('');
-        }
+    for (var i = 0; i < this.rotors.length; i++) {
+        this.log('Rotor ' + i + ' table');
+        this.log(this.rotors[i].wires);
+        this.log('');
     }
 };
 
 Machine.prototype.setReflector = function(reflector) {
     this.reflector = reflector;
 
-    if (this.debug) {
-        console.log('Machine reflector table');
-        console.log(this.reflector.reflectionTable);
-        console.log('');
-    }
+    this.log('Machine reflector table');
+    this.log(this.reflector.reflectionTable);
+    this.log('');
 };
 
 Machine.prototype.encode = function(letter) {
@@ -265,24 +266,24 @@ Machine.prototype.encode = function(letter) {
     // Update rotor position after encoding
     this.rotors[0].step();
 
-    if (this.debug) console.log('Machine encoding');
+    this.log('Machine encoding');
 
-    if (this.debug) console.log('letter: ' + letter);
+    this.log('letter: ' + letter);
 
     var plugboardDirect = this.plugboard.encode(letter);
-    if (this.debug) console.log('plugboardDirect: ' + letter + ' -> ' + plugboardDirect);
+    this.log('plugboardDirect: ' + letter + ' -> ' + plugboardDirect);
 
     var rotorsDirect = this.encodeWithRotors(plugboardDirect);
 
     var reflectorInverse = this.reflector.encode(rotorsDirect);
-    if (this.debug) console.log('reflectorInverse: ' + rotorsDirect + ' -> ' + reflectorInverse);
+    this.log('reflectorInverse: ' + rotorsDirect + ' -> ' + reflectorInverse);
 
     var rotorsInverse = this.encodeInverseWithRotors(reflectorInverse);
 
     var plugboardInverse = this.plugboard.encode(rotorsInverse);
-    if (this.debug) console.log('plugboardInverse: ' + rotorsInverse + ' -> ' + plugboardInverse);
+    this.log('plugboardInverse: ' + rotorsInverse + ' -> ' + plugboardInverse);
 
-    if (this.debug) console.log('');
+    this.log('');
 
     return plugboardInverse;
 };
@@ -290,7 +291,7 @@ Machine.prototype.encode = function(letter) {
 Machine.prototype.encodeWithRotors = function(letter) {
     for (var i = 0; i < this.rotors.length; i++) {
         output = this.rotors[i].encode(letter);
-        if (this.debug) console.log('rotor ' + i + ' direct: ' + letter + ' -> ' + output);
+        this.log('rotor ' + i + ' direct: ' + letter + ' -> ' + output);
 
         letter = output;
     }
@@ -301,7 +302,7 @@ Machine.prototype.encodeWithRotors = function(letter) {
 Machine.prototype.encodeInverseWithRotors = function(letter) {
     for (var i = this.rotors.length - 1; i >= 0; i--) {
         output = this.rotors[i].encode(letter, true);
-        if (this.debug) console.log('rotor ' + i + ' inverse: ' + letter + ' -> ' + output);
+        this.log('rotor ' + i + ' inverse: ' + letter + ' -> ' + output);
 
         letter = output;
     }
