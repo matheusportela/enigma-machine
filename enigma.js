@@ -270,19 +270,17 @@ Machine.prototype.encode = function(letter) {
     if (this.debug) console.log('letter: ' + letter);
 
     var plugboardDirect = this.plugboard.encode(letter);
-    if (this.debug) console.log('plugboardDirect: ' + plugboardDirect);
+    if (this.debug) console.log('plugboardDirect: ' + letter + ' -> ' + plugboardDirect);
 
     var rotorsDirect = this.encodeWithRotors(plugboardDirect);
-    if (this.debug) console.log('rotorsDirect: ' + rotorsDirect);
 
     var reflectorInverse = this.reflector.encode(rotorsDirect);
-    if (this.debug) console.log('reflectorInverse: ' + reflectorInverse);
+    if (this.debug) console.log('reflectorInverse: ' + rotorsDirect + ' -> ' + reflectorInverse);
 
     var rotorsInverse = this.encodeInverseWithRotors(reflectorInverse);
-    if (this.debug) console.log('rotorsInverse: ' + rotorsInverse);
 
     var plugboardInverse = this.plugboard.encode(rotorsInverse);
-    if (this.debug) console.log('plugboardInverse: ' + plugboardInverse);
+    if (this.debug) console.log('plugboardInverse: ' + rotorsInverse + ' -> ' + plugboardInverse);
 
     if (this.debug) console.log('');
 
@@ -292,6 +290,8 @@ Machine.prototype.encode = function(letter) {
 Machine.prototype.encodeWithRotors = function(letter) {
     for (var i = 0; i < this.rotors.length; i++) {
         output = this.rotors[i].encode(letter);
+        if (this.debug) console.log('rotor ' + i + ' direct: ' + letter + ' -> ' + output);
+
         letter = output;
     }
 
@@ -301,6 +301,8 @@ Machine.prototype.encodeWithRotors = function(letter) {
 Machine.prototype.encodeInverseWithRotors = function(letter) {
     for (var i = this.rotors.length - 1; i >= 0; i--) {
         output = this.rotors[i].encode(letter, true);
+        if (this.debug) console.log('rotor ' + i + ' inverse: ' + letter + ' -> ' + output);
+
         letter = output;
     }
 
