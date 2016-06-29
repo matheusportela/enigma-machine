@@ -525,24 +525,25 @@ describe('Machine', function() {
         // https://www.youtube.com/watch?v=4L6KtS0t75w
         it('expect output be equal', function() {
             var machine = new enigma.Machine();
+            machine.setDebug(true);
             machine.setPlugboard(new enigma.Plugboard('QE', 'GN'));
             machine.setRotors(new enigma.RotorV(), new enigma.RotorII(),
                 new enigma.RotorI());
             machine.setReflector(new enigma.ReflectorB());
 
-            console.log('0: ' + machine.rotors[0].turnoverCountdown);
-            console.log('1: ' + machine.rotors[1].turnoverCountdown);
-            console.log('2: ' + machine.rotors[2].turnoverCountdown);
+            // console.log('0: ' + machine.rotors[0].turnoverCountdown);
+            // console.log('1: ' + machine.rotors[1].turnoverCountdown);
+            // console.log('2: ' + machine.rotors[2].turnoverCountdown);
 
-            var input = 'HELLO';
+            var input = 'ABC';
             var output = '';
-            var expect = 'DJNPI';
+            var expect = 'QSO';
 
             for (var i = 0; i < input.length; i++) {
                 output += machine.encode(input[i]);
-                console.log('0: ' + machine.rotors[0].turnoverCountdown);
-                console.log('1: ' + machine.rotors[1].turnoverCountdown);
-                console.log('2: ' + machine.rotors[2].turnoverCountdown);
+                // console.log('0: ' + machine.rotors[0].turnoverCountdown);
+                // console.log('1: ' + machine.rotors[1].turnoverCountdown);
+                // console.log('2: ' + machine.rotors[2].turnoverCountdown);
             }
 
             assert.equal(output, expect);

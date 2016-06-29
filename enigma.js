@@ -207,23 +207,50 @@ var ReflectorC = function() {
 };
 
 var Machine = function() {
+    this.debug = false;
     this.plugboard = null;
     this.rotors = null;
     this.reflector = null;
 };
 
+Machine.prototype.setDebug = function(debug) {
+    this.debug = debug;
+};
+
 Machine.prototype.setPlugboard = function(plugboard) {
     this.plugboard = plugboard;
+
+    if (this.debug) {
+        console.log('Machine plugboard table');
+        console.log(this.plugboard.plugs);
+        console.log('');
+    }
 };
 
 Machine.prototype.setRotors = function(rotor0, rotor1, rotor2) {
     this.rotors = [rotor0, rotor1, rotor2];
     this.rotors[0].setNextRotor(this.rotors[1]);
     this.rotors[1].setNextRotor(this.rotors[2]);
+
+    if (this.debug) {
+        console.log('Machine rotors table');
+
+        for (var i = 0; i < this.rotors.length; i++) {
+            console.log('Rotor ' + i + ' table');
+            console.log(this.rotors[i].wires);
+            console.log('');
+        }
+    }
 };
 
 Machine.prototype.setReflector = function(reflector) {
     this.reflector = reflector;
+
+    if (this.debug) {
+        console.log('Machine reflector table');
+        console.log(this.reflector.reflectionTable);
+        console.log('');
+    }
 };
 
 Machine.prototype.encode = function(letter) {
@@ -238,11 +265,26 @@ Machine.prototype.encode = function(letter) {
     // Update rotor position after encoding
     this.rotors[0].step();
 
+    if (this.debug) console.log('Machine encoding');
+
+    if (this.debug) console.log('letter: ' + letter);
+
     var plugboardDirect = this.plugboard.encode(letter);
+    if (this.debug) console.log('plugboardDirect: ' + plugboardDirect);
+
     var rotorsDirect = this.encodeWithRotors(plugboardDirect);
+    if (this.debug) console.log('rotorsDirect: ' + rotorsDirect);
+
     var reflectorInverse = this.reflector.encode(rotorsDirect);
+    if (this.debug) console.log('reflectorInverse: ' + reflectorInverse);
+
     var rotorsInverse = this.encodeInverseWithRotors(reflectorInverse);
+    if (this.debug) console.log('rotorsInverse: ' + rotorsInverse);
+
     var plugboardInverse = this.plugboard.encode(rotorsInverse);
+    if (this.debug) console.log('plugboardInverse: ' + plugboardInverse);
+
+    if (this.debug) console.log('');
 
     return plugboardInverse;
 };
