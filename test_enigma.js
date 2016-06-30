@@ -548,13 +548,36 @@ describe('Machine', function() {
     });
 
     describe('test machine against other implementation', function() {
-        var testMachine = function(input, expect) {
+        var createMachine1 = function() {
             var machine = new enigma.Machine();
             machine.setPlugboard(new enigma.Plugboard('QE', 'GN'));
             machine.setRotors(new enigma.RotorV(), new enigma.RotorII(),
                 new enigma.RotorI());
             machine.setReflector(new enigma.ReflectorB());
+            return machine;
+        };
 
+        var createMachine2 = function() {
+            var machine = new enigma.Machine();
+            machine.setPlugboard(new enigma.Plugboard('MVP', 'ABF'));
+
+            var rightRotor = new enigma.RotorIII();
+            rightRotor.setInitialPosition('J');
+
+            var middleRotor = new enigma.RotorII();
+            middleRotor.setInitialPosition('I');
+
+            var leftRotor = new enigma.RotorIV();
+            leftRotor.setInitialPosition('Q');
+
+            machine.setRotors(rightRotor, middleRotor, leftRotor);
+
+            machine.setReflector(new enigma.ReflectorB());
+
+            return machine;
+        };
+
+        var testMachine = function(machine, input, expect) {
             var output = '';
 
             for (var i = 0; i < input.length; i++)
@@ -565,10 +588,17 @@ describe('Machine', function() {
 
         // Reference:
         // https://www.youtube.com/watch?v=4L6KtS0t75w
-        it('expect output be equal', function() {
-            testMachine('ABC', 'QSO');
-            testMachine('HELLO', 'DJNPI');
-            testMachine('ENIGMA', 'MISQWF');
+        it('expect output be equal with machine 1', function() {
+            testMachine(createMachine1(), 'ABC', 'QSO');
+            testMachine(createMachine1(), 'HELLO', 'DJNPI');
+            testMachine(createMachine1(), 'ENIGMA', 'MISQWF');
+            testMachine(createMachine1(),
+                'MYNAMEISMATHEUSPORTELAANDIAMBUILDINGANENIGMAMACHINESIMULATOR',
+                'ELLBWSUOPHSPWFVOXQNIDFDBMGLSFEFWFLBTHHGOMPQJSSYWOAPEGBXQOGMB');
+        });
+
+        it('expect output be equal with machine 2', function() {
+            testMachine(createMachine2(), 'ABC', 'VVB');
         });
     });
 });
