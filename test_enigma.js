@@ -127,11 +127,12 @@ describe('Rotor', function() {
             assert.equal(rotor.encode('E', true), 'A');
         });
 
-        it('expect encode with initial position to correspond to the letter',
+        it('expect encode with initial position to correspond to second ' +
+            'letter with one offset',
             function() {
                 var rotor = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
                 rotor.setInitialPosition('B');
-                assert.equal(rotor.encode('A'), 'K');
+                assert.equal(rotor.encode('A'), 'J');
         });
     });
 
@@ -163,7 +164,7 @@ describe('Rotor', function() {
             var rotor = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
             assert.equal(rotor.encode('E', true), 'A');
             rotor.step();
-            assert.equal(rotor.encode('K', true), 'A');
+            assert.equal(rotor.encode('J', true), 'A');
         });
     });
 
@@ -242,7 +243,7 @@ describe('Rotor', function() {
                 rotor1.setTurnoverLetter('B');
                 rotor1.setInitialPosition('A');
                 rotor1.step();
-                assert.equal(rotor2.encode('A'), 'K');
+                assert.equal(rotor2.encode('A'), 'J');
         });
 
         it('expect turnover countdown be always greater than zero',
@@ -551,26 +552,17 @@ describe('Machine', function() {
         // https://www.youtube.com/watch?v=4L6KtS0t75w
         it('expect output be equal', function() {
             var machine = new enigma.Machine();
-            machine.setDebug(true);
             machine.setPlugboard(new enigma.Plugboard('QE', 'GN'));
             machine.setRotors(new enigma.RotorV(), new enigma.RotorII(),
                 new enigma.RotorI());
             machine.setReflector(new enigma.ReflectorB());
 
-            // console.log('0: ' + machine.rotors[0].turnoverCountdown);
-            // console.log('1: ' + machine.rotors[1].turnoverCountdown);
-            // console.log('2: ' + machine.rotors[2].turnoverCountdown);
-
             var input = 'ABC';
             var output = '';
             var expect = 'QSO';
 
-            for (var i = 0; i < input.length; i++) {
+            for (var i = 0; i < input.length; i++)
                 output += machine.encode(input[i]);
-                // console.log('0: ' + machine.rotors[0].turnoverCountdown);
-                // console.log('1: ' + machine.rotors[1].turnoverCountdown);
-                // console.log('2: ' + machine.rotors[2].turnoverCountdown);
-            }
 
             assert.equal(output, expect);
         });

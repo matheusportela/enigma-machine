@@ -57,6 +57,7 @@ var Rotor = function(wiringTable) {
     this.inverseWires = {};
     this.nextRotor = null;
     this.turnoverCountdown = 26;
+    this.innerRingPosition = 0;
 
     if (wiringTable)
         this.setWiringTable(wiringTable);
@@ -96,15 +97,28 @@ Rotor.prototype.setWiringTable = function(wiringTable) {
 };
 
 Rotor.prototype.encode = function(letter, inverse) {
-    if (inverse)
-        return this.inverseWires[letter];
-    return this.wires[letter];
+    var letterCode = letter.charCodeAt(0) - 'A'.charCodeAt(0);
+
+    if (inverse) {
+        offsetLetterCode = (letterCode + this.innerRingPosition) % LETTERS.length;
+        if (offsetLetterCode < 0) offsetLetterCode += 26;
+
+        return this.inverseWires[String.fromCharCode('A'.charCodeAt(0) + offsetLetterCode)];
+    } else {
+        outputLetterCode = this.wires[letter].charCodeAt(0) - 'A'.charCodeAt(0);
+
+        offsetLetterCode = (outputLetterCode - this.innerRingPosition) % LETTERS.length;
+        if (offsetLetterCode < 0) offsetLetterCode += 26;
+
+        return String.fromCharCode('A'.charCodeAt(0) + offsetLetterCode);
+    }
 };
 
 Rotor.prototype.step = function() {
     this.stepWires();
     this.updateInverseWires();
     this.turnover();
+    this.innerRingPosition += 1;
 };
 
 Rotor.prototype.stepWires = function() {
