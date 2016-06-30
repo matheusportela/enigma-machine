@@ -1,6 +1,32 @@
 var assert = require('assert');
 var enigma = require('./enigma');
 
+var clone = function(object) {
+    return Object.create(object);
+};
+
+describe('Helper methods', function() {
+    describe('clone', function() {
+        var original_object = {
+            a: '0',
+            b: 1
+        };
+        var same_object = original_object;
+        var cloned_object = clone(original_object);
+
+        same_object.a = 0;
+
+        assert.equal(original_object.a, 0);
+        assert.equal(same_object.a, 0);
+        assert.equal(cloned_object.a, '0');
+
+        cloned_object.a = 1;
+        assert.equal(original_object.a, 0);
+        assert.equal(same_object.a, 0);
+        assert.equal(cloned_object.a, 1);
+    });
+});
+
 describe('Plugboard', function() {
     describe('addPlug', function() {
         it('expect add letter to plugs', function() {
@@ -231,7 +257,7 @@ describe('Rotor', function() {
 describe('Rotor Models', function() {
     var assertWiringTable = function(rotorPrototype, wiringTable) {
         var rotor = new rotorPrototype();
-        var rotorWiringTable = Object.assign({}, rotor.wires);
+        var rotorWiringTable = clone(rotor.wires);
 
         rotor.setWiringTable(wiringTable);
 
@@ -465,7 +491,7 @@ describe('Machine', function() {
             machine.setReflector(new enigma.ReflectorB());
 
             // Assert first step
-            var rotor1WiringTable = Object.assign({}, rotor1.wires);
+            var rotor1WiringTable = clone(rotor1.wires);
             machine.encode('A');
 
             for (var i = 0; i < enigma.LETTERS.length; i++) {
@@ -476,7 +502,7 @@ describe('Machine', function() {
             }
 
             // Assert second step
-            rotor1WiringTable = Object.assign({}, rotor1.wires);
+            rotor1WiringTable = clone(rotor1.wires);
             machine.encode('A');
 
             for (i = 0; i < enigma.LETTERS.length; i++) {
