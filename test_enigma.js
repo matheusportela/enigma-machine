@@ -548,23 +548,27 @@ describe('Machine', function() {
     });
 
     describe('test machine against other implementation', function() {
-        // Reference:
-        // https://www.youtube.com/watch?v=4L6KtS0t75w
-        it('expect output be equal', function() {
+        var testMachine = function(input, expect) {
             var machine = new enigma.Machine();
             machine.setPlugboard(new enigma.Plugboard('QE', 'GN'));
             machine.setRotors(new enigma.RotorV(), new enigma.RotorII(),
                 new enigma.RotorI());
             machine.setReflector(new enigma.ReflectorB());
 
-            var input = 'ABC';
             var output = '';
-            var expect = 'QSO';
 
             for (var i = 0; i < input.length; i++)
                 output += machine.encode(input[i]);
 
             assert.equal(output, expect);
+        };
+
+        // Reference:
+        // https://www.youtube.com/watch?v=4L6KtS0t75w
+        it('expect output be equal', function() {
+            testMachine('ABC', 'QSO');
+            testMachine('HELLO', 'DJNPI');
+            testMachine('ENIGMA', 'MISQWF');
         });
     });
 });
