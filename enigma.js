@@ -242,8 +242,8 @@ Machine.prototype.setPlugboard = function(plugboard) {
     this.log('');
 };
 
-Machine.prototype.setRotors = function(rotor0, rotor1, rotor2) {
-    this.rotors = [rotor0, rotor1, rotor2];
+Machine.prototype.setRotors = function(leftRotor, middleRotor, rightRotor) {
+    this.rotors = [rightRotor, middleRotor, leftRotor];
     this.rotors[0].setNextRotor(this.rotors[1]);
     this.rotors[1].setNextRotor(this.rotors[2]);
 
