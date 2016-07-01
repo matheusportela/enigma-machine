@@ -599,6 +599,11 @@ describe('Machine', function() {
 
         it('expect output be equal with machine 2', function() {
             testMachine(createMachine2(), 'ABC', 'VVB');
+            testMachine(createMachine2(), 'HELLO', 'DQWZS');
+            testMachine(createMachine2(), 'ENIGMA', 'QXKBYD');
+            testMachine(createMachine2(),
+                'MYNAMEISMATHEUSPORTELAANDIAMBUILDINGANENIGMAMACHINESIMULATOR',
+                'FTXIYXXXACVXLBTLUBRIKRNDQZGTUASOJESPJLBJLLDLFRULKTHAQJYQSOYM');
         });
     });
 });
