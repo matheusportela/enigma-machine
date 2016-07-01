@@ -559,7 +559,7 @@ describe('Machine', function() {
 
         var createMachine2 = function() {
             var machine = new enigma.Machine();
-            machine.setPlugboard(new enigma.Plugboard('MVP', 'ABF'));
+            machine.setPlugboard(new enigma.Plugboard('MA', 'VB', 'PF'));
 
             var rightRotor = new enigma.RotorIII();
             rightRotor.setInitialPosition('J');
