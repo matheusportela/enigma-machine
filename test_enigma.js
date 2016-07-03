@@ -113,6 +113,23 @@ describe('Rotor', function() {
         });
     });
 
+    describe('setInnerPosition', function() {
+        it('expect rotor inner position be set via method', function() {
+            var rotor = new enigma.Rotor();
+            rotor.setWiringTable('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            rotor.setInnerPosition('B');
+            assert.equal(rotor.encode('A'), 'K');
+            assert.equal(rotor.encode('B'), 'M');
+        });
+
+        it('expect rotor inner position be set to Z method', function() {
+            var rotor = new enigma.Rotor();
+            rotor.setWiringTable('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
+            rotor.setInnerPosition('Z');
+            assert.equal(rotor.encode('A'), 'J');
+        });
+    });
+
     describe('encode', function() {
         it('expect rotor to encode with wire table', function() {
             var rotor = new enigma.Rotor('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
