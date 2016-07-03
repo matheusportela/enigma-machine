@@ -333,7 +333,7 @@ describe('Rotor Models', function() {
 describe('Reflector', function() {
     describe('setReflectionTable', function() {
         it('expect reflection table to be correctly configured', function() {
-            var reflectionTable = 'YRUHQSLDPXNGOKMIEBFZCWVJAT'
+            var reflectionTable = 'YRUHQSLDPXNGOKMIEBFZCWVJAT';
             var reflector = new enigma.Reflector();
             reflector.setReflectionTable(reflectionTable);
 
