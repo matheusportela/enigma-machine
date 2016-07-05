@@ -613,6 +613,30 @@ describe('Machine', function() {
             return machine;
         };
 
+        var createMachineWithRingAndGroundSettings = function() {
+            var machine = new enigma.Machine();
+
+            machine.setPlugboard(new enigma.Plugboard('MA', 'VB', 'PF'));
+
+            var rightRotor = new enigma.RotorIII();
+            rightRotor.setInnerPosition('B');
+            rightRotor.setInitialPosition('J');
+
+            var middleRotor = new enigma.RotorII();
+            middleRotor.setInnerPosition('W');
+            middleRotor.setInitialPosition('I');
+
+            var leftRotor = new enigma.RotorIV();
+            leftRotor.setInnerPosition('M');
+            leftRotor.setInitialPosition('Q');
+
+            machine.setRotors(leftRotor, middleRotor, rightRotor);
+
+            machine.setReflector(new enigma.ReflectorB());
+
+            return machine;
+        };
+
         var testMachine = function(machine, input, expect) {
             var output = '';
 
@@ -655,6 +679,27 @@ describe('Machine', function() {
             testMachine(createMachineWithRingSetting(), 'QSVZI', 'HELLO');
             testMachine(createMachineWithRingSetting(), 'ENIGMA', 'SBNRDW');
             testMachine(createMachineWithRingSetting(), 'SBNRDW', 'ENIGMA');
+        });
+
+        it('expect output with ring and ground settings', function() {
+            testMachine(createMachineWithRingAndGroundSettings(), 'ABC',
+                'WWO');
+            testMachine(createMachineWithRingAndGroundSettings(), 'WWO',
+                'ABC');
+            testMachine(createMachineWithRingAndGroundSettings(), 'HELLO',
+                'OAJIM');
+            testMachine(createMachineWithRingAndGroundSettings(), 'OAJIM',
+                'HELLO');
+            testMachine(createMachineWithRingAndGroundSettings(), 'ENIGMA',
+                'JYROOF');
+            testMachine(createMachineWithRingAndGroundSettings(), 'JYROOF',
+                'ENIGMA');
+            testMachine(createMachineWithRingAndGroundSettings(),
+                'MYNAMEISMATHEUSPORTELAANDIAMBUILDINGANENIGMAMACHINESIMULATOR',
+                'VNZSOTTMKBFFFAOXRFGFEFGAHYNBFFYCNEMUBYUOQSHRWYROQODMCHTDHRWP');
+            testMachine(createMachineWithRingAndGroundSettings(),
+                'VNZSOTTMKBFFFAOXRFGFEFGAHYNBFFYCNEMUBYUOQSHRWYROQODMCHTDHRWP',
+                'MYNAMEISMATHEUSPORTELAANDIAMBUILDINGANENIGMAMACHINESIMULATOR');
         });
     });
 });
