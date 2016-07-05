@@ -78,10 +78,11 @@ Rotor.prototype.setInnerPosition = function(innerRingPosition) {
     var numberOfSteps = innerRingPosition.charCodeAt(0) -
         'A'.charCodeAt(0);
 
-    for (var i = 0; i < numberOfSteps; i++)
+    for (var i = 0; i < 26 - numberOfSteps; i++) {
         this.stepWires();
-
-    this.updateInverseWires();
+        this.updateInverseWires();
+        this.innerRingPosition += 1;
+    }
 };
 
 Rotor.prototype.setNextRotor = function(rotor) {

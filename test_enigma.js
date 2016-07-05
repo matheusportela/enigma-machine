@@ -119,7 +119,7 @@ describe('Rotor', function() {
             rotor.setWiringTable('EKMFLGDQVZNTOWYHXUSPAIBRCJ');
             rotor.setInnerPosition('B');
             assert.equal(rotor.encode('A'), 'K');
-            assert.equal(rotor.encode('B'), 'M');
+            assert.equal(rotor.encode('B'), 'F');
         });
 
         it('expect rotor inner position be set to Z method', function() {
@@ -594,6 +594,25 @@ describe('Machine', function() {
             return machine;
         };
 
+        var createMachineWithRingSetting = function() {
+            var machine = new enigma.Machine();
+
+            machine.setPlugboard(new enigma.Plugboard('MA', 'VB', 'PF'));
+
+            var rightRotor = new enigma.RotorIII();
+            rightRotor.setInnerPosition('B');
+
+            var middleRotor = new enigma.RotorII();
+
+            var leftRotor = new enigma.RotorIV();
+
+            machine.setRotors(leftRotor, middleRotor, rightRotor);
+
+            machine.setReflector(new enigma.ReflectorB());
+
+            return machine;
+        };
+
         var testMachine = function(machine, input, expect) {
             var output = '';
 
@@ -607,11 +626,17 @@ describe('Machine', function() {
         // https://www.youtube.com/watch?v=4L6KtS0t75w
         it('expect output be equal with machine 1', function() {
             testMachine(createMachine1(), 'ABC', 'QSO');
+            testMachine(createMachine1(), 'QSO', 'ABC');
             testMachine(createMachine1(), 'HELLO', 'DJNPI');
+            testMachine(createMachine1(), 'DJNPI', 'HELLO');
             testMachine(createMachine1(), 'ENIGMA', 'MISQWF');
+            testMachine(createMachine1(), 'MISQWF', 'ENIGMA');
             testMachine(createMachine1(),
                 'MYNAMEISMATHEUSPORTELAANDIAMBUILDINGANENIGMAMACHINESIMULATOR',
                 'ELLBWSUOPHSPWFVOXQNIDFDBMGLSFEFWFLBTHHGOMPQJSSYWOAPEGBXQOGMB');
+            testMachine(createMachine1(),
+                'ELLBWSUOPHSPWFVOXQNIDFDBMGLSFEFWFLBTHHGOMPQJSSYWOAPEGBXQOGMB',
+                'MYNAMEISMATHEUSPORTELAANDIAMBUILDINGANENIGMAMACHINESIMULATOR');
         });
 
         it('expect output be equal with machine 2', function() {
@@ -621,6 +646,15 @@ describe('Machine', function() {
             testMachine(createMachine2(),
                 'MYNAMEISMATHEUSPORTELAANDIAMBUILDINGANENIGMAMACHINESIMULATOR',
                 'FTXIYXXXACVXLBTLUBRIKRNDQZGTUASOJESPJLBJLLDLFRULKTHAQJYQSOYM');
+        });
+
+        it('expect output with inner ring setting', function() {
+            testMachine(createMachineWithRingSetting(), 'ABC', 'UNB');
+            testMachine(createMachineWithRingSetting(), 'UNB', 'ABC');
+            testMachine(createMachineWithRingSetting(), 'HELLO', 'QSVZI');
+            testMachine(createMachineWithRingSetting(), 'QSVZI', 'HELLO');
+            testMachine(createMachineWithRingSetting(), 'ENIGMA', 'SBNRDW');
+            testMachine(createMachineWithRingSetting(), 'SBNRDW', 'ENIGMA');
         });
     });
 });
