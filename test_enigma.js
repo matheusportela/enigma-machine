@@ -646,8 +646,9 @@ describe('Machine', function() {
             assert.equal(output, expect);
         };
 
-        // Reference:
-        // https://www.youtube.com/watch?v=4L6KtS0t75w
+        // References:
+        // http://enigma.louisedade.co.uk/enigma.html
+        // http://www.enigmaco.de/enigma/enigma.swf
         it('expect output be equal with machine 1', function() {
             testMachine(createMachine1(), 'ABC', 'QSO');
             testMachine(createMachine1(), 'QSO', 'ABC');
