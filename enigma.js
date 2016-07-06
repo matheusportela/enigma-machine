@@ -338,7 +338,7 @@ Machine.prototype.encodeLetters = function(letters) {
         result += this.encode(letters[i]);
 
     return result;
-}
+};
 
 module.exports = {
     LETTERS: LETTERS,
