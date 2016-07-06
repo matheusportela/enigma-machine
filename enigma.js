@@ -331,6 +331,15 @@ Machine.prototype.encodeInverseWithRotors = function(letter) {
     return output;
 };
 
+Machine.prototype.encodeLetters = function(letters) {
+    var result = '';
+
+    for (var i = 0; i < letters.length; i++)
+        result += this.encode(letters[i]);
+
+    return result;
+}
+
 module.exports = {
     LETTERS: LETTERS,
     Plugboard: Plugboard,

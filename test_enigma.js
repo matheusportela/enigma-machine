@@ -703,4 +703,33 @@ describe('Machine', function() {
                 'MYNAMEISMATHEUSPORTELAANDIAMBUILDINGANENIGMAMACHINESIMULATOR');
         });
     });
+
+    describe('encodeLetters', function() {
+        it('expect encoding with standard machine', function() {
+            var machine = new enigma.Machine();
+
+            machine.setPlugboard(new enigma.Plugboard('MA', 'VB', 'PF'));
+
+            var rightRotor = new enigma.RotorIII();
+            rightRotor.setInnerPosition('B');
+            rightRotor.setInitialPosition('J');
+
+            var middleRotor = new enigma.RotorII();
+            middleRotor.setInnerPosition('W');
+            middleRotor.setInitialPosition('I');
+
+            var leftRotor = new enigma.RotorIV();
+            leftRotor.setInnerPosition('M');
+            leftRotor.setInitialPosition('Q');
+
+            machine.setRotors(leftRotor, middleRotor, rightRotor);
+
+            machine.setReflector(new enigma.ReflectorB());
+
+            output = machine.encodeLetters(
+                'MYNAMEISMATHEUSPORTELAANDIAMBUILDINGANENIGMAMACHINESIMULATOR');
+            assert.equal(output,
+                'VNZSOTTMKBFFFAOXRFGFEFGAHYNBFFYCNEMUBYUOQSHRWYROQODMCHTDHRWP');
+        });
+    });
 });
