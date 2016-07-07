@@ -31,6 +31,11 @@
 
         <script type="text/javascript">
         $(document).ready(function() {
+            $('#enigma-input').keypress(function(e) {
+                if (e.keyCode == 13)
+                    $('#encode-btn').click();
+            });
+
             $('#encode-btn').click(function() {
                 var machine = new Machine();
 
