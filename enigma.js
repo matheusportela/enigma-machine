@@ -340,17 +340,20 @@ Machine.prototype.encodeLetters = function(letters) {
     return result;
 };
 
-module.exports = {
-    LETTERS: LETTERS,
-    Plugboard: Plugboard,
-    Rotor: Rotor,
-    RotorI: RotorI,
-    RotorII: RotorII,
-    RotorIII: RotorIII,
-    RotorIV: RotorIV,
-    RotorV: RotorV,
-    Reflector: Reflector,
-    ReflectorB: ReflectorB,
-    ReflectorC: ReflectorC,
-    Machine: Machine
-};
+// Compatibility between Node.js and browsers
+if (typeof module !== 'undefined') {
+    module.exports = {
+        LETTERS: LETTERS,
+        Plugboard: Plugboard,
+        Rotor: Rotor,
+        RotorI: RotorI,
+        RotorII: RotorII,
+        RotorIII: RotorIII,
+        RotorIV: RotorIV,
+        RotorV: RotorV,
+        Reflector: Reflector,
+        ReflectorB: ReflectorB,
+        ReflectorC: ReflectorC,
+        Machine: Machine
+    };
+}
