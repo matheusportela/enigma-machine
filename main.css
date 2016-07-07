@@ -1,0 +1,60 @@
+body {
+    background-color: rgb(253, 253, 253);
+}
+
+h1 {
+    text-align: center;
+    font-size: 60px;
+    font-family: Alegreya Sans, Verdana;
+    text-transform: uppercase;
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+
+footer {
+    text-align: center;
+    font-family: Alegreya Sans, Verdana;
+    width: 100%;
+    bottom: 0;
+    position: absolute;
+    font-size: 12px;
+}
+
+.enigma-section {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+}
+
+.config-section {
+    position: absolute;
+    top: 70%;
+    transform: translateY(-70%);
+    width: 100%;
+}
+
+.input-section, .output-section {
+    text-align: center;
+}
+
+.input-text, .output-text {
+    background-color: rgb(245, 245, 245);
+    text-align: center;
+    font-size: 45px;
+    font-family: Cutive Mono, monospace;
+    text-transform: uppercase;
+}
+
+.encode-section {
+    text-align: center;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.encode-btn {
+    text-align: center;
+    font-size: 30px;
+    font-family: Alegreya Sans, Verdana;
+    text-transform: uppercase;
+}

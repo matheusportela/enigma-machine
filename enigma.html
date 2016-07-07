@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Enigma</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+        <script src="enigma.js"></script>
+
+        <link rel="stylesheet" href="main.css">
+        <link href='https://fonts.googleapis.com/css?family=Alegreya+Sans:300' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Cutive+Mono' rel='stylesheet' type='text/css'>
+    </head>
+
+    <body>
+        <h1>Enigma Simulator</h1>
+
+        <div class="enigma-section">
+            <div class="input-section">
+                <input class="input-text" id="enigma-input" type="text" placeholder="Input">
+            </div>
+
+            <div class="encode-section">
+                <button class="encode-btn" id="encode-btn">Encode</button>
+            </div>
+
+            <div class="output-section">
+                <input class="output-text" id="enigma-output" type="text" placeholder="Output" readonly>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+        $(document).ready(function() {
+            $('#encode-btn').click(function() {
+                var machine = new Machine();
+
+                machine.setPlugboard(new Plugboard('MA', 'VB', 'PF'));
+
+                var rightRotor = new RotorIII();
+                rightRotor.setInnerPosition('B');
+                rightRotor.setInitialPosition('J');
+
+                var middleRotor = new RotorII();
+                middleRotor.setInnerPosition('W');
+                middleRotor.setInitialPosition('I');
+
+                var leftRotor = new RotorIV();
+                leftRotor.setInnerPosition('M');
+                leftRotor.setInitialPosition('Q');
+
+                machine.setRotors(leftRotor, middleRotor, rightRotor);
+
+                machine.setReflector(new ReflectorB());
+
+                input = $('#enigma-input').val().toUpperCase();
+                output = machine.encodeLetters(input);
+                $('#enigma-output').val(output);
+            });
+        });
+        </script>
+
+        <footer>
+            <p>Developed by <a href="http://www.matheusportela.com">Matheus V. Portela</a></p>
+        </footer>
+    </body>
+</html>
