@@ -31,12 +31,11 @@
 
         <script type="text/javascript">
         $(document).ready(function() {
-            $('#enigma-input').keypress(function(e) {
-                if (e.keyCode == 13)
-                    $('#encode-btn').click();
-            });
+            var isValidInput = function(input) {
+                return /^[a-zA-Z]*$/g.test(input);
+            };
 
-            $('#encode-btn').click(function() {
+            var encode = function(input) {
                 var machine = new Machine();
 
                 machine.setPlugboard(new Plugboard('MA', 'VB', 'PF'));
@@ -57,9 +56,27 @@
 
                 machine.setReflector(new ReflectorB());
 
+                return machine.encodeLetters(input);
+            }
+
+            $('#enigma-input').keypress(function(e) {
+                if (e.keyCode == 13)
+                    $('#encode-btn').click();
+            });
+
+            $('#enigma-input').keyup(function(e) {
+                input = $(this).val();
+                validInput = input.replace(/([^a-zA-Z]+)/gi, '');
+                $(this).val(validInput);
+            });
+
+            $('#encode-btn').click(function() {
                 input = $('#enigma-input').val().toUpperCase();
-                output = machine.encodeLetters(input);
-                $('#enigma-output').val(output);
+
+                if (isValidInput(input)) {
+                    output = encode(input);
+                    $('#enigma-output').val(output);
+                }
             });
         });
         </script>
