@@ -20,10 +20,6 @@
                 <input class="input-text" id="enigma-input" type="text" placeholder="Input">
             </div>
 
-            <div class="encode-section">
-                <button class="encode-btn" id="encode-btn">Encode</button>
-            </div>
-
             <div class="output-section">
                 <input class="output-text" id="enigma-output" type="text" placeholder="Output" readonly>
             </div>
@@ -66,17 +62,9 @@
 
             $('#enigma-input').keyup(function(e) {
                 input = $(this).val();
-                validInput = input.replace(/([^a-zA-Z]+)/gi, '');
+                validInput = input.replace(/([^a-zA-Z]+)/gi, '').toUpperCase();
                 $(this).val(validInput);
-            });
-
-            $('#encode-btn').click(function() {
-                input = $('#enigma-input').val().toUpperCase();
-
-                if (isValidInput(input)) {
-                    output = encode(input);
-                    $('#enigma-output').val(output);
-                }
+                $('#enigma-output').val(encode(validInput));
             });
         });
         </script>

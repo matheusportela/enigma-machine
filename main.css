@@ -36,6 +36,7 @@ footer {
 
 .input-section, .output-section {
     text-align: center;
+    padding-top: 30px;
 }
 
 .input-text, .output-text {
@@ -44,17 +45,4 @@ footer {
     font-size: 45px;
     font-family: Cutive Mono, monospace;
     text-transform: uppercase;
-}
-
-.encode-section {
-    text-align: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
-
-.encode-btn {
-    text-align: center;
-    font-size: 30px;
-    text-transform: uppercase;
-    font-family: Alegreya Sans, Verdana;
 }
