@@ -28,6 +28,33 @@
         <div class="configuration-section">
             <h2>Rotors settings</h2>
 
+            <label>Rotor types</label>
+            <select class="rotor-type-config" id="rotor-type-left">
+                <option value="I">I</option>
+                <option value="II">II</option>
+                <option value="III">III</option>
+                <option value="IV" selected>IV</option>
+                <option value="V">V</option>
+            </select>
+
+            <select class="rotor-type-config" id="rotor-type-middle">
+                <option value="I">I</option>
+                <option value="II" selected>II</option>
+                <option value="III">III</option>
+                <option value="IV">IV</option>
+                <option value="V">V</option>
+            </select>
+
+            <select class="rotor-type-config" id="rotor-type-right">
+                <option value="I">I</option>
+                <option value="II">II</option>
+                <option value="III" selected>III</option>
+                <option value="IV">IV</option>
+                <option value="V">V</option>
+            </select>
+
+            <br>
+
             <label>Initial position</label>
             <input class="rotor-config" id="rotor-left-pos" type="text" value="Q">
             <input class="rotor-config" id="rotor-middle-pos" type="text" value="I">
@@ -42,7 +69,17 @@
 
             <br>
 
-            <label>Plugboard settings</label><br>
+            <h2>Reflector settings</h2>
+
+            <label>Reflector type</label>
+            <select class="reflector-config" id="reflector-type">
+                <option value="B">B</option>
+                <option value="C">C</option>
+            </select>
+
+            <br>
+
+            <h2>Plugboard settings</h2>
             <table>
                 <tr>
                     <td>
@@ -234,6 +271,34 @@
                 return pairs;
             };
 
+            var getRotorInstance = function(pos) {
+                var type = $('#rotor-type-' + pos).val();
+
+                if (type === 'I')
+                    rotor = new RotorI();
+                else if (type === 'II')
+                    rotor = new RotorII();
+                else if (type === 'III')
+                    rotor = new RotorIII();
+                else if (type === 'IV')
+                    rotor = new RotorIV();
+                else if (type === 'V')
+                    rotor = new RotorV();
+
+                return rotor;
+            }
+
+            var getReflectorInstance = function() {
+                var reflector;
+
+                if ($('#reflector-type').val() === 'B')
+                    reflector = new ReflectorB();
+                else if ($('#reflector-type').val() === 'C')
+                    reflector = new ReflectorC();
+
+                return reflector;
+            }
+
             var encode = function(input) {
                 getPlugboardConfig();
 
@@ -243,21 +308,22 @@
                 plugboard.addPlugs.apply(plugboard, getPlugboardConfig());
                 machine.setPlugboard(plugboard);
 
-                var rightRotor = new RotorIII();
+                var rightRotor = getRotorInstance('right');
                 rightRotor.setInnerPosition($('#ring-right-pos').val());
                 rightRotor.setInitialPosition($('#rotor-right-pos').val());
 
-                var middleRotor = new RotorII();
+                var middleRotor = getRotorInstance('middle');
                 middleRotor.setInnerPosition($('#ring-middle-pos').val());
                 middleRotor.setInitialPosition($('#rotor-middle-pos').val());
 
-                var leftRotor = new RotorIV();
+                var leftRotor = getRotorInstance('left');
                 leftRotor.setInnerPosition($('#ring-left-pos').val());
                 leftRotor.setInitialPosition($('#rotor-left-pos').val());
 
                 machine.setRotors(leftRotor, middleRotor, rightRotor);
 
-                machine.setReflector(new ReflectorB());
+                var reflector = getReflectorInstance();
+                machine.setReflector(reflector);
 
                 return machine.encodeLetters(input);
             };
@@ -290,6 +356,37 @@
                     $(this).attr('previousLetter', '');
                     $(this).val('');
                 }
+            });
+
+            $('select[id^=rotor-type-]').change(function() {
+                // Get a list of the ids that are selected
+                var selected = [];
+                $('[id^=rotor-type-] option:selected').each(function() {
+                    selected.push($(this).val());
+                });
+
+                // Walk through every select option and enable if not
+                // in the list and not already selected
+                $('[id^=rotor-type-] option').each(function()
+                {
+                    if (!$(this).is(':selected'))
+                    {
+                        var shouldDisable = false;
+                        for (var i = 0; i < selected.length; i++)
+                        {
+                            if (selected[i] == $(this).val())
+                                shouldDisable = true;
+                        }
+
+                        $(this).css('text-decoration', '');
+                        $(this).removeAttr('disabled', 'disabled');
+
+                        if (shouldDisable) {
+                            $(this).css('text-decoration', 'line-through');
+                            $(this).attr('disabled', 'disabled');
+                        }
+                    }
+                });
             });
         });
         </script>

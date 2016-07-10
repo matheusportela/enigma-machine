@@ -20,7 +20,7 @@ footer {
     font-size: 12px;
 }
 
-.enigma-section {
+/*.enigma-section {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -32,7 +32,7 @@ footer {
     top: 70%;
     transform: translateY(-70%);
     width: 100%;
-}
+}*/
 
 .input-section, .output-section {
     text-align: center;
