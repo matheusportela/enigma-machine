@@ -348,9 +348,11 @@
                     $(this).val(letter);
             });
 
-            $('.plugboard-config').keyup(function(e) {
+            $('.plugboard-config').keydown(function(e) {
+                e.preventDefault();
+
                 thisLetter = $(this).attr('id').slice(-1);
-                otherLetter = $(this).val().toUpperCase();
+                otherLetter = String.fromCharCode(e.keyCode).toUpperCase();
                 previousLetter = $(this).attr('previousLetter');
 
                 if (previousLetter)
