@@ -25,50 +25,49 @@
             </div>
         </div>
 
-        <div class="configuration-section">
+        <div class="config-section">
             <h2>Rotors settings</h2>
 
-            <label>Rotor types</label>
-            <select class="rotor-type-config" id="rotor-type-left">
-                <option value="I">I</option>
-                <option value="II">II</option>
-                <option value="III">III</option>
-                <option value="IV" selected>IV</option>
-                <option value="V">V</option>
-            </select>
+            <div class="config-subsection">
+                <label>Rotor types</label>
+                <select class="rotor-type-config" id="rotor-type-left">
+                    <option value="I">I</option>
+                    <option value="II">II</option>
+                    <option value="III">III</option>
+                    <option value="IV" selected>IV</option>
+                    <option value="V">V</option>
+                </select>
 
-            <select class="rotor-type-config" id="rotor-type-middle">
-                <option value="I">I</option>
-                <option value="II" selected>II</option>
-                <option value="III">III</option>
-                <option value="IV">IV</option>
-                <option value="V">V</option>
-            </select>
+                <select class="rotor-type-config" id="rotor-type-middle">
+                    <option value="I">I</option>
+                    <option value="II" selected>II</option>
+                    <option value="III">III</option>
+                    <option value="IV">IV</option>
+                    <option value="V">V</option>
+                </select>
 
-            <select class="rotor-type-config" id="rotor-type-right">
-                <option value="I">I</option>
-                <option value="II">II</option>
-                <option value="III" selected>III</option>
-                <option value="IV">IV</option>
-                <option value="V">V</option>
-            </select>
-
-            <br>
-
-            <label>Initial position</label>
-            <input class="rotor-config" id="rotor-left-pos" type="text" value="Q">
-            <input class="rotor-config" id="rotor-middle-pos" type="text" value="I">
-            <input class="rotor-config" id="rotor-right-pos" type="text" value="J">
-
-            <br>
-
-            <label>Ring settings</label>
-            <input class="rotor-config" id="ring-left-pos" type="text" value="M">
-            <input class="rotor-config" id="ring-middle-pos" type="text" value="W">
-            <input class="rotor-config" id="ring-right-pos" type="text" value="B">
-
-            <br>
-
+                <select class="rotor-type-config" id="rotor-type-right">
+                    <option value="I">I</option>
+                    <option value="II">II</option>
+                    <option value="III" selected>III</option>
+                    <option value="IV">IV</option>
+                    <option value="V">V</option>
+                </select>
+            </div>
+            <div class="config-subsection">
+                <label>Ground settings</label>
+                <input class="rotor-config" id="rotor-left-pos" type="text" value="Q">
+                <input class="rotor-config" id="rotor-middle-pos" type="text" value="I">
+                <input class="rotor-config" id="rotor-right-pos" type="text" value="J">
+            </div>
+            <div class="config-subsection">
+                <label>Ring settings</label>
+                <input class="rotor-config" id="ring-left-pos" type="text" value="M">
+                <input class="rotor-config" id="ring-middle-pos" type="text" value="W">
+                <input class="rotor-config" id="ring-right-pos" type="text" value="B">
+            </div>
+        </div>
+        <div class="config-section">
             <h2>Reflector settings</h2>
 
             <label>Reflector type</label>
@@ -76,165 +75,117 @@
                 <option value="B">B</option>
                 <option value="C">C</option>
             </select>
+        </div>
 
-            <br>
-
+        <div class="config-section">
             <h2>Plugboard settings</h2>
-            <table>
+            <table class="plugboard-config">
                 <tr>
                     <td>
                         <label for="plugboard-A">A</label>
-                        <input class="plugboard-config" id="plugboard-A" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-A" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-B">B</label>
-                        <input class="plugboard-config" id="plugboard-B" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-B" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-C">C</label>
-                        <input class="plugboard-config" id="plugboard-C" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-C" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-D">D</label>
-                        <input class="plugboard-config" id="plugboard-D" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-D" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-E">E</label>
-                        <input class="plugboard-config" id="plugboard-E" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-E" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-F">F</label>
-                        <input class="plugboard-config" id="plugboard-F" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-F" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-G">G</label>
-                        <input class="plugboard-config" id="plugboard-G" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-G" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-H">H</label>
-                        <input class="plugboard-config" id="plugboard-H" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-H" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-I">I</label>
-                        <input class="plugboard-config" id="plugboard-I" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-I" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-J">J</label>
-                        <input class="plugboard-config" id="plugboard-J" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-J" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-K">K</label>
-                        <input class="plugboard-config" id="plugboard-K" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-K" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-L">L</label>
-                        <input class="plugboard-config" id="plugboard-L" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-L" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-M">M</label>
-                        <input class="plugboard-config" id="plugboard-M" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-M" type="text">
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <label for="plugboard-N">N</label>
-                        <input class="plugboard-config" id="plugboard-N" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-N" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-O">O</label>
-                        <input class="plugboard-config" id="plugboard-O" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-O" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-P">P</label>
-                        <input class="plugboard-config" id="plugboard-P" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-P" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-Q">Q</label>
-                        <input class="plugboard-config" id="plugboard-Q" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-Q" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-R">R</label>
-                        <input class="plugboard-config" id="plugboard-R" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-R" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-S">S</label>
-                        <input class="plugboard-config" id="plugboard-S" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-S" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-T">T</label>
-                        <input class="plugboard-config" id="plugboard-T" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-T" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-U">U</label>
-                        <input class="plugboard-config" id="plugboard-U" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-U" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-V">V</label>
-                        <input class="plugboard-config" id="plugboard-V" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-V" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-W">W</label>
-                        <input class="plugboard-config" id="plugboard-W" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-W" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-X">X</label>
-                        <input class="plugboard-config" id="plugboard-X" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-X" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-Y">Y</label>
-                        <input class="plugboard-config" id="plugboard-Y" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-Y" type="text">
                     </td>
-                </tr>
-                <tr>
                     <td>
                         <label for="plugboard-Z">Z</label>
-                        <input class="plugboard-config" id="plugboard-Z" type="text">
+                        <input class="plugboard-letter-config" id="plugboard-letter-Z" type="text">
                     </td>
                 </tr>
             </table>
@@ -260,7 +211,7 @@
             };
 
             var getPlugboardConfig = function() {
-                var pairs = $('.plugboard-config').map(function() {
+                var pairs = $('.plugboard-letter-config').map(function() {
                     thisLetter = $(this).attr('id').slice(-1);
                     otherLetter = $(this).val().toUpperCase();
 
@@ -348,7 +299,7 @@
                     $(this).val(letter);
             });
 
-            $('.plugboard-config').keydown(function(e) {
+            $('.plugboard-letter-config').keydown(function(e) {
                 e.preventDefault();
 
                 thisLetter = $(this).attr('id').slice(-1);
@@ -356,12 +307,12 @@
                 previousLetter = $(this).attr('previousLetter');
 
                 if (previousLetter)
-                    $('#plugboard-' + previousLetter).val('');
+                    $('#plugboard-letter-' + previousLetter).val('');
 
                 if (isValidPlugboardConfig(otherLetter, thisLetter)) {
                     $(this).val(otherLetter);
                     $(this).attr('previousLetter', otherLetter);
-                    $('#plugboard-' + otherLetter).val(thisLetter);
+                    $('#plugboard-letter-' + otherLetter).val(thisLetter);
                 } else {
                     $(this).attr('previousLetter', '');
                     $(this).val('');

@@ -16,23 +16,8 @@ footer {
     font-family: Alegreya Sans, Verdana;
     width: 100%;
     bottom: 0;
-    position: absolute;
     font-size: 12px;
 }
-
-/*.enigma-section {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 100%;
-}
-
-.config-section {
-    position: absolute;
-    top: 70%;
-    transform: translateY(-70%);
-    width: 100%;
-}*/
 
 .input-section, .output-section {
     text-align: center;
@@ -45,4 +30,18 @@ footer {
     font-size: 45px;
     font-family: Cutive Mono, monospace;
     text-transform: uppercase;
+}
+
+.config-section input {
+    text-align: center;
+    font-family: Cutive Mono, monospace;
+    font-size: 12px;
+    width: 30px;
+}
+
+.config-subsection {
+    width: 300px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
