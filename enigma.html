@@ -340,6 +340,14 @@
                 $('#enigma-output').val(encode(validInput));
             });
 
+            $('.rotor-config').keydown(function(e) {
+                e.preventDefault();
+                letter = String.fromCharCode(e.keyCode).toUpperCase();
+
+                if (isAlphabeticChar(letter))
+                    $(this).val(letter);
+            });
+
             $('.plugboard-config').keyup(function(e) {
                 thisLetter = $(this).attr('id').slice(-1);
                 otherLetter = $(this).val().toUpperCase();
