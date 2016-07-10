@@ -211,21 +211,37 @@
 
             var isAlphabeticChar = function(input) {
                 return /^[a-zA-Z]$/g.test(input);
-            }
+            };
 
             var isDifferentChar = function(input, current) {
                 return (input !== current);
-            }
+            };
 
             var isValidPlugboardConfig = function(input, current) {
                 return (isAlphabeticChar(input)
                     && isDifferentChar(input, current));
-            }
+            };
+
+            var getPlugboardConfig = function() {
+                var pairs = $('.plugboard-config').map(function() {
+                    thisLetter = $(this).attr('id').slice(-1);
+                    otherLetter = $(this).val().toUpperCase();
+
+                    if (otherLetter)
+                        return (thisLetter + otherLetter);
+                }).get();
+
+                return pairs;
+            };
 
             var encode = function(input) {
+                getPlugboardConfig();
+
                 var machine = new Machine();
 
-                machine.setPlugboard(new Plugboard('MA', 'VB', 'PF'));
+                var plugboard = new Plugboard();
+                plugboard.addPlugs.apply(plugboard, getPlugboardConfig());
+                machine.setPlugboard(plugboard);
 
                 var rightRotor = new RotorIII();
                 rightRotor.setInnerPosition($('#ring-right-pos').val());
@@ -244,7 +260,7 @@
                 machine.setReflector(new ReflectorB());
 
                 return machine.encodeLetters(input);
-            }
+            };
 
             $('#enigma-input').keypress(function(e) {
                 if (e.keyCode == 13)
