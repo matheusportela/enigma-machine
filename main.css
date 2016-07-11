@@ -19,6 +19,12 @@ footer {
     font-size: 12px;
 }
 
+button {
+    font-family: Alegreya Sans, Verdana;
+    font-size: 14px;
+    font-weight: bold;
+}
+
 .input-section, .output-section {
     text-align: center;
     padding-top: 30px;
@@ -32,16 +38,53 @@ footer {
     text-transform: uppercase;
 }
 
-.config-section input {
+.buttons-section {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.settings {
+    display: none;
+    text-align: center;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.settings-content {
+    bottom: 0;
+    width: 100%;
+}
+
+.settings-section {
+    padding: 2px 16px;
+}
+
+.settings-section h2 {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.settings-section input {
     text-align: center;
     font-family: Cutive Mono, monospace;
     font-size: 12px;
     width: 30px;
 }
 
-.config-subsection {
-    width: 300px;
+.settings-subsection {
+    padding-right: 10px;
+    padding-left: 10px;
+    /*width: 300px;*/
     display: block;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+.plugboard-settings {
+    width: 100%;
 }

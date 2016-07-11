@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Enigma</title>
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
         <script src="enigma.js"></script>
@@ -25,174 +26,187 @@
             </div>
         </div>
 
-        <div class="config-section">
-            <h2>Rotors settings</h2>
-
-            <div class="config-subsection">
-                <label>Rotor types</label>
-                <select class="rotor-type-config" id="rotor-type-left">
-                    <option value="I" selected>I</option>
-                    <option value="II">II</option>
-                    <option value="III">III</option>
-                    <option value="IV">IV</option>
-                    <option value="V">V</option>
-                </select>
-
-                <select class="rotor-type-config" id="rotor-type-middle">
-                    <option value="I">I</option>
-                    <option value="II" selected>II</option>
-                    <option value="III">III</option>
-                    <option value="IV">IV</option>
-                    <option value="V">V</option>
-                </select>
-
-                <select class="rotor-type-config" id="rotor-type-right">
-                    <option value="I">I</option>
-                    <option value="II">II</option>
-                    <option value="III" selected>III</option>
-                    <option value="IV">IV</option>
-                    <option value="V">V</option>
-                </select>
-            </div>
-            <div class="config-subsection">
-                <label>Ground settings</label>
-                <input class="rotor-config" id="rotor-left-pos" type="text" value="A">
-                <input class="rotor-config" id="rotor-middle-pos" type="text" value="A">
-                <input class="rotor-config" id="rotor-right-pos" type="text" value="A">
-            </div>
-            <div class="config-subsection">
-                <label>Ring settings</label>
-                <input class="rotor-config" id="ring-left-pos" type="text" value="A">
-                <input class="rotor-config" id="ring-middle-pos" type="text" value="A">
-                <input class="rotor-config" id="ring-right-pos" type="text" value="A">
-            </div>
-        </div>
-        <div class="config-section">
-            <h2>Reflector settings</h2>
-
-            <label>Reflector type</label>
-            <select class="reflector-config" id="reflector-type">
-                <option value="B">B</option>
-                <option value="C">C</option>
-            </select>
+        <div class="buttons-section">
+            <button id="settings-section-btn">Show Settings</button>
         </div>
 
-        <div class="config-section">
-            <h2>Plugboard settings</h2>
-            <table class="plugboard-config">
-                <tr>
-                    <td>
-                        <label for="plugboard-A">A</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-A" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-B">B</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-B" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-C">C</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-C" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-D">D</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-D" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-E">E</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-E" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-F">F</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-F" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-G">G</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-G" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-H">H</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-H" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-I">I</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-I" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-J">J</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-J" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-K">K</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-K" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-L">L</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-L" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-M">M</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-M" type="text">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <label for="plugboard-N">N</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-N" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-O">O</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-O" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-P">P</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-P" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-Q">Q</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-Q" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-R">R</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-R" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-S">S</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-S" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-T">T</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-T" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-U">U</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-U" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-V">V</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-V" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-W">W</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-W" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-X">X</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-X" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-Y">Y</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-Y" type="text">
-                    </td>
-                    <td>
-                        <label for="plugboard-Z">Z</label>
-                        <input class="plugboard-letter-config" id="plugboard-letter-Z" type="text">
-                    </td>
-                </tr>
-            </table>
+        <div class="settings" id="settings-section">
+            <div class="settings-content">
+                <div class="settings-section">
+                    <h2>Rotors settings</h2>
+
+                    <div class="settings-subsection">
+                        <label>Rotor types</label>
+                        <select class="rotor-type-settings" id="rotor-type-left">
+                            <option value="I" selected>I</option>
+                            <option value="II">II</option>
+                            <option value="III">III</option>
+                            <option value="IV">IV</option>
+                            <option value="V">V</option>
+                        </select>
+
+                        <select class="rotor-type-settings" id="rotor-type-middle">
+                            <option value="I">I</option>
+                            <option value="II" selected>II</option>
+                            <option value="III">III</option>
+                            <option value="IV">IV</option>
+                            <option value="V">V</option>
+                        </select>
+
+                        <select class="rotor-type-settings" id="rotor-type-right">
+                            <option value="I">I</option>
+                            <option value="II">II</option>
+                            <option value="III" selected>III</option>
+                            <option value="IV">IV</option>
+                            <option value="V">V</option>
+                        </select>
+                    </div>
+                    <div class="settings-subsection">
+                        <label>Ground settings</label>
+                        <input class="rotor-settings" id="rotor-left-pos" type="text" value="A">
+                        <input class="rotor-settings" id="rotor-middle-pos" type="text" value="A">
+                        <input class="rotor-settings" id="rotor-right-pos" type="text" value="A">
+                    </div>
+                    <div class="settings-subsection">
+                        <label>Ring settings</label>
+                        <input class="rotor-settings" id="ring-left-pos" type="text" value="A">
+                        <input class="rotor-settings" id="ring-middle-pos" type="text" value="A">
+                        <input class="rotor-settings" id="ring-right-pos" type="text" value="A">
+                    </div>
+                </div>
+                <div class="settings-section">
+                    <h2>Reflector settings</h2>
+
+                    <div class="settings-subsection">
+                        <label>Reflector type</label>
+                        <select class="reflector-settings" id="reflector-type">
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h2>Plugboard settings</h2>
+
+                    <div class="settings-subsection">
+                        <table class="plugboard-settings">
+                            <tr>
+                                <td>
+                                    <label for="plugboard-A">A</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-A" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-B">B</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-B" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-C">C</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-C" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-D">D</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-D" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-E">E</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-E" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-F">F</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-F" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-G">G</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-G" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-H">H</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-H" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-I">I</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-I" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-J">J</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-J" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-K">K</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-K" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-L">L</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-L" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-M">M</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-M" type="text">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="plugboard-N">N</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-N" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-O">O</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-O" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-P">P</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-P" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-Q">Q</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-Q" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-R">R</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-R" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-S">S</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-S" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-T">T</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-T" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-U">U</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-U" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-V">V</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-V" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-W">W</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-W" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-X">X</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-X" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-Y">Y</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-Y" type="text">
+                                </td>
+                                <td>
+                                    <label for="plugboard-Z">Z</label>
+                                    <input class="plugboard-letter-settings" id="plugboard-letter-Z" type="text">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script type="text/javascript">
-        $(document).ready(function() {
+        $(function() {
             var isValidInput = function(input) {
                 return /^[a-zA-Z]*$/g.test(input);
             };
@@ -211,7 +225,7 @@
             };
 
             var getPlugboardConfig = function() {
-                var pairs = $('.plugboard-letter-config').map(function() {
+                var pairs = $('.plugboard-letter-settings').map(function() {
                     thisLetter = $(this).attr('id').slice(-1);
                     otherLetter = $(this).val().toUpperCase();
 
@@ -279,27 +293,29 @@
                 return machine.encodeLetters(input);
             };
 
-            $('#enigma-input').keypress(function(e) {
-                if (e.keyCode == 13)
-                    $('#encode-btn').click();
-            });
+            var updateOutput = function() {
+                $('#enigma-output').val(encode($('#enigma-input').val()));
+            };
 
             $('#enigma-input').keyup(function(e) {
                 input = $(this).val();
                 validInput = input.replace(/([^a-zA-Z]+)/gi, '').toUpperCase();
                 $(this).val(validInput);
-                $('#enigma-output').val(encode(validInput));
+                updateOutput();
             });
 
-            $('.rotor-config').keydown(function(e) {
+            $('.rotor-settings').keydown(function(e) {
                 e.preventDefault();
+
                 letter = String.fromCharCode(e.keyCode).toUpperCase();
 
                 if (isAlphabeticChar(letter))
                     $(this).val(letter);
+
+                updateOutput();
             });
 
-            $('.plugboard-letter-config').keydown(function(e) {
+            $('.plugboard-letter-settings').keydown(function(e) {
                 e.preventDefault();
 
                 thisLetter = $(this).attr('id').slice(-1);
@@ -317,6 +333,8 @@
                     $(this).attr('previousLetter', '');
                     $(this).val('');
                 }
+
+                updateOutput();
             });
 
             $('select[id^=rotor-type-]').change(function() {
@@ -348,6 +366,21 @@
                         }
                     }
                 });
+
+                updateOutput();
+            });
+
+            $('#settings-section-btn').click(function() {
+                $('#settings-section').toggle();
+
+                if ($(this).text() == 'Show Settings')
+                    $(this).text('Hide Settings');
+                else
+                    $(this).text('Show Settings');
+            });
+
+            $('.reflector-settings').change(function() {
+                updateOutput();
             });
         });
         </script>
