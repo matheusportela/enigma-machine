@@ -336,6 +336,15 @@
                 otherLetter = String.fromCharCode(e.keyCode).toUpperCase();
                 previousLetter = $(this).attr('previousLetter');
 
+                // Erase any other letter that is currently connected to the
+                // letter we want right now
+                if (isAlphabeticChar(otherLetter)) {
+                    currentOtherLetter = $('#plugboard-letter-' + otherLetter).val();
+                    if (currentOtherLetter)
+                        $('#plugboard-letter-' + currentOtherLetter).val('');
+                }
+
+                // Erasing the letter that we were previously connected to
                 if (previousLetter)
                     $('#plugboard-letter-' + previousLetter).val('');
 
