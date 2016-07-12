@@ -352,6 +352,7 @@
                     $(this).val(otherLetter);
                     $(this).attr('previousLetter', otherLetter);
                     $('#plugboard-letter-' + otherLetter).val(thisLetter);
+                    $('#plugboard-letter-' + otherLetter).attr('previousLetter', thisLetter);
                 } else {
                     $(this).attr('previousLetter', '');
                     $(this).val('');
